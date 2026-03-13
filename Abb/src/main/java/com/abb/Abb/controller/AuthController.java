@@ -1,5 +1,6 @@
 package com.abb.Abb.controller;
 
+import com.abb.Abb.controller.api.AuthApiDocs;
 import com.abb.Abb.dto.LoginRequest;
 import com.abb.Abb.dto.RegisterRequest;
 import com.abb.Abb.entity.Client;
@@ -23,7 +24,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
-public class AuthController {
+public class AuthController implements AuthApiDocs { // 🚀 IMPLEMENT THE INTERFACE HERE
 
     @Autowired
     private ClientRepository clientRepo;
@@ -42,6 +43,7 @@ public class AuthController {
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
+    @Override
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
 
@@ -66,7 +68,7 @@ public class AuthController {
         return ResponseEntity.ok(savedClient);
     }
 
-
+    @Override
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         Authentication authentication = authManager.authenticate(

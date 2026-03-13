@@ -1,5 +1,6 @@
 package com.abb.Abb.controller;
 
+import com.abb.Abb.controller.api.TransactionApiDocs;
 import com.abb.Abb.dto.TransferRequest;
 import com.abb.Abb.entity.Client;
 import com.abb.Abb.entity.Transaction;
@@ -17,7 +18,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/transactions")
-public class TransactionController {
+public class TransactionController implements TransactionApiDocs {
 
     @Autowired
     private TransactionService transactionService;
@@ -31,6 +32,7 @@ public class TransactionController {
     @Autowired
     private com.abb.Abb.repository.ClientRepository clientRepository;
 
+    @Override
     @PostMapping("/transfer")
     public ResponseEntity<?> transferMoney(@RequestBody TransferRequest request, Authentication authentication) {
         try {
@@ -45,6 +47,7 @@ public class TransactionController {
         }
     }
 
+    @Override
     @GetMapping("/history")
     public ResponseEntity<?> getTransactionHistory(Authentication authentication) {
         try {
@@ -59,6 +62,7 @@ public class TransactionController {
         }
     }
 
+    @Override
     @GetMapping("/export/pdf")
     public ResponseEntity<byte[]> exportHistoryToPdf(Authentication authentication) {
         String email = authentication.getName();
@@ -75,6 +79,7 @@ public class TransactionController {
                 .body(pdfBytes);
     }
 
+    @Override
     @GetMapping("/export/excel")
     public ResponseEntity<byte[]> exportHistoryToExcel(Authentication authentication) {
         String email = authentication.getName();
@@ -86,9 +91,7 @@ public class TransactionController {
 
         return org.springframework.http.ResponseEntity.ok()
                 .header(org.springframework.http.HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=releve_bancaire.xlsx")
-                // This is the official MIME type for .xlsx files
                 .contentType(org.springframework.http.MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
                 .body(excelBytes);
     }
-
 }

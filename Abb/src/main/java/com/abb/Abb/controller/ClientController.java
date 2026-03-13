@@ -1,5 +1,6 @@
 package com.abb.Abb.controller;
 
+import com.abb.Abb.controller.api.ClientApiDocs;
 import com.abb.Abb.dto.ClientDashboardDTO;
 import com.abb.Abb.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +14,12 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/client")
-public class ClientController {
+public class ClientController implements ClientApiDocs {
 
     @Autowired
     private ClientService clientService;
 
+    @Override
     @GetMapping("/dashboard")
     public ResponseEntity<?> getDashboardData(Authentication authentication) {
         try {
