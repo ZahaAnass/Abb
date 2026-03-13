@@ -3,6 +3,12 @@ export interface LoginRequest {
     password?: string;
 }
 
+export interface RegisterRequest {
+    name: string;
+    email: string;
+    password: string;
+}
+
 export interface AuthResponse {
     token: string;
 }
@@ -10,4 +16,5 @@ export interface AuthResponse {
 export interface DecodedToken {
     sub: string;
     exp: number;
+    role: string;
 }

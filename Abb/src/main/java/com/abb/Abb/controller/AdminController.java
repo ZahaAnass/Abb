@@ -32,7 +32,6 @@ public class AdminController {
 
     @PostMapping("/employees")
     public ResponseEntity<?> createEmployee(@RequestBody EmployeeRequest request) {
-        // Keep simple null checks here as they are part of the Request validation
         if (request.getEmail() == null || request.getEmail().isEmpty()) {
             return ResponseEntity.badRequest().body(Map.of("error", "Email requis"));
         }

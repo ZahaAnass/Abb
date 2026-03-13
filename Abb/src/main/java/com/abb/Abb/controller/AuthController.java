@@ -5,6 +5,7 @@ import com.abb.Abb.dto.RegisterRequest;
 import com.abb.Abb.entity.Client;
 import com.abb.Abb.repository.ClientRepository;
 import com.abb.Abb.repository.UserRepository;
+import com.abb.Abb.service.ClientService;
 import com.abb.Abb.service.JWTService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Map;
 
@@ -28,6 +30,9 @@ public class AuthController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ClientService clientService;
 
     @Autowired
     private JWTService jwtService;
@@ -46,18 +51,12 @@ public class AuthController {
                     .body(Map.of("error", "Un compte avec cet email existe déjà."));
         }
 
-        if (clientRepo.existsByRib(request.getRib())) {
-            return ResponseEntity
-                    .status(HttpStatus.CONFLICT)
-                    .body(Map.of("error", "Ce RIB est déjà utilisé par un autre compte."));
-        }
-
         Client newClient = new Client();
         newClient.setName(request.getName());
         newClient.setEmail(request.getEmail());
         newClient.setPassword(encoder.encode(request.getPassword()));
-        newClient.setRib(request.getRib());
-        newClient.setSolde(request.getSolde());
+        newClient.setRib(clientService.generateUniqueRib());
+        newClient.setSolde(BigDecimal.valueOf(0));
 
         newClient.setRole("CLIENT");
         newClient.setCreationDate(LocalDateTime.now());

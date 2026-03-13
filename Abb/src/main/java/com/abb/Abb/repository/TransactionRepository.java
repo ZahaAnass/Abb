@@ -17,4 +17,6 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     List<Transaction> findBySenderRib(String senderRib);
 
     List<Transaction> findByReceiverRib(String receiverRib);
+
+    Integer countBySenderRibOrReceiverRib(String senderRib, String receiverRib);
 }

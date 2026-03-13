@@ -1,0 +1,136 @@
+<div class="max-w-7xl mx-auto">
+  
+  <div *ngIf="loading" class="flex flex-col items-center justify-center py-20">
+    <svg class="animate-spin h-10 w-10 text-abb-yellow mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+    </svg>
+    <p class="text-gray-500 font-medium">Chargement de vos comptes...</p>
+  </div>
+
+  <div *ngIf="errorMessage" class="bg-red-50 border-l-4 border-red-500 p-4 rounded-md mb-6">
+    <p class="text-red-700 font-medium">{{ errorMessage }}</p>
+  </div>
+
+  <ng-container *ngIf="!loading && dashboardData">
+    
+    <div class="flex flex-col md:flex-row md:items-center justify-between mb-8">
+      <div>
+        <h1 class="text-2xl font-bold text-gray-900">Bonjour, {{ dashboardData.name }}</h1>
+        <p class="text-gray-500 text-sm mt-1">RIB: <span class="font-mono">{{ dashboardData.rib }}</span></p>
+      </div>
+      <div class="mt-4 md:mt-0">
+        <a routerLink="/client/virement" class="bg-abb-yellow hover:bg-yellow-500 text-white font-medium py-2 px-4 rounded-lg shadow-sm transition-colors flex items-center gap-2 cursor-pointer">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+          Nouveau Virement
+        </a>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-1 h-full bg-abb-yellow"></div>
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <p class="text-gray-500 text-sm font-medium mb-1">Solde Actuel</p>
+                    <h3 class="text-3xl font-bold text-gray-900">{{ dashboardData.solde | number:'1.2-2' }} <span class="text-lg text-gray-500">MAD</span></h3>
+                </div>
+                <div class="p-3 bg-yellow-50 rounded-lg text-abb-yellow">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <p class="text-gray-500 text-sm font-medium mb-1">Total Transactions</p>
+                    <h3 class="text-2xl font-bold text-gray-900">{{ dashboardData.numberOfTransactions }}</h3>
+                </div>
+                <div class="p-3 bg-blue-50 rounded-lg text-blue-500">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 opacity-50">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <p class="text-gray-500 text-sm font-medium mb-1">Dépenses (Mois)</p>
+                    <h3 class="text-2xl font-bold text-gray-900">-- MAD</h3>
+                </div>
+                <div class="p-3 bg-red-50 rounded-lg text-red-500">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                </div>
+            </div>
+            <p class="text-xs text-gray-400">Fonctionnalité à venir</p>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 opacity-50">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <p class="text-gray-500 text-sm font-medium mb-1">Messages</p>
+                    <h3 class="text-2xl font-bold text-gray-900">0</h3>
+                </div>
+                <div class="p-3 bg-abb-dark/10 rounded-lg text-abb-dark">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                </div>
+            </div>
+            <p class="text-xs text-gray-400">Aucun message</p>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+      
+      <div class="px-6 py-5 border-b border-gray-100 flex justify-between items-center">
+        <h2 class="text-lg font-bold text-gray-900">Transactions Récentes</h2>
+        <a routerLink="/client/history" class="text-sm text-abb-yellow hover:text-yellow-600 font-medium">Voir l'historique complet</a>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-gray-50/50 text-gray-500 text-xs uppercase tracking-wider">
+              <th class="px-6 py-4 font-semibold">Date</th>
+              <th class="px-6 py-4 font-semibold">Description</th>
+              <th class="px-6 py-4 font-semibold">Montant</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100 text-sm">
+            
+            <tr *ngIf="uiTransactions.length === 0">
+              <td colspan="3" class="px-6 py-8 text-center text-gray-500">
+                Aucune transaction récente trouvée.
+              </td>
+            </tr>
+
+            <tr *ngFor="let trx of uiTransactions" class="hover:bg-gray-50 transition-colors">
+              
+              <td class="px-6 py-4 whitespace-nowrap text-gray-500">
+                {{ trx.transactionDate | date:'dd MMM yyyy, HH:mm' }}
+              </td>
+              
+              <td class="px-6 py-4 font-medium text-gray-900">
+                <div class="flex items-center gap-3">
+                  <div [ngClass]="trx.uiType === 'CREDIT' ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-600'" class="p-2 rounded-full shrink-0">
+                    <svg *ngIf="trx.uiType === 'CREDIT'" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                    <svg *ngIf="trx.uiType === 'DEBIT'" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+                  </div>
+                  <span class="truncate max-w-[200px] sm:max-w-xs">{{ trx.description }}</span>
+                </div>
+              </td>
+              
+              <td class="px-6 py-4 whitespace-nowrap font-bold" [ngClass]="trx.uiType === 'CREDIT' ? 'text-green-600' : 'text-gray-900'">
+                {{ trx.uiType === 'CREDIT' ? '+' : '-' }}{{ trx.amount | number:'1.2-2' }} MAD
+              </td>
+              
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </ng-container>
+</div>

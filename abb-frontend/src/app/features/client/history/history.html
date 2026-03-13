@@ -1,0 +1,76 @@
+<div class="max-w-7xl mx-auto pb-12">
+  
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+    <div>
+      <h1 class="text-2xl font-bold text-gray-900">Historique des transactions</h1>
+      <p class="text-gray-500 text-sm mt-1">Consultez et téléchargez vos mouvements bancaires.</p>
+    </div>
+    
+    <div class="flex gap-3 mt-4 sm:mt-0">
+      <button 
+        (click)="downloadExcel()" 
+        [disabled]="loading || downloadingExcel || uiTransactions.length === 0"
+        class="bg-green-600 hover:bg-green-700 text-white px-4 py-2.5 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
+        <svg *ngIf="!downloadingExcel" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+        <svg *ngIf="downloadingExcel" class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+        {{ downloadingExcel ? 'Génération...' : 'Excel' }}
+      </button>
+
+      <button 
+        (click)="downloadPdf()" 
+        [disabled]="loading || downloadingPdf || uiTransactions.length === 0"
+        class="bg-gray-900 hover:bg-black text-white px-4 py-2.5 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
+        <svg *ngIf="!downloadingPdf" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+        <svg *ngIf="downloadingPdf" class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+        {{ downloadingPdf ? 'Génération...' : 'PDF' }}
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="flex flex-col items-center justify-center py-20">
+    <svg class="animate-spin h-10 w-10 text-abb-yellow mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+    <p class="text-gray-500 font-medium">Chargement de l'historique...</p>
+  </div>
+
+  <div *ngIf="errorMessage" class="bg-red-50 border-l-4 border-red-500 p-4 rounded-md mb-6">
+    <p class="text-red-700 font-medium">{{ errorMessage }}</p>
+  </div>
+
+  <div *ngIf="!loading && !errorMessage" class="space-y-3">
+      
+    <div *ngIf="uiTransactions.length === 0" class="bg-white rounded-xl shadow-sm border border-gray-100 p-12 text-center">
+      <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
+        <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+      </div>
+      <h3 class="text-lg font-bold text-gray-900 mb-1">Aucune transaction</h3>
+      <p class="text-gray-500 text-sm">Vous n'avez pas encore de mouvements sur votre compte.</p>
+    </div>
+
+    <div *ngFor="let trx of uiTransactions" class="bg-white p-4 sm:p-5 rounded-xl shadow-sm border border-gray-100 flex items-center justify-between hover:border-gray-300 hover:shadow-md transition-all group">
+      
+      <div class="flex items-center gap-4 sm:gap-5 overflow-hidden">
+        <div [ngClass]="trx.uiType === 'CREDIT' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'" class="w-12 h-12 rounded-full flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+          <svg *ngIf="trx.uiType === 'CREDIT'" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+          <svg *ngIf="trx.uiType === 'DEBIT'" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+        </div>
+
+        <div class="min-w-0">
+          <p class="font-bold text-gray-900 text-base sm:text-lg truncate">{{ trx.description }}</p>
+          <div class="flex items-center text-xs sm:text-sm text-gray-500 mt-1 gap-2">
+            <span class="font-medium text-gray-400">{{ trx.transactionDate | date:'dd MMM yyyy, HH:mm' }}</span>
+            <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
+            <span class="font-mono text-xs truncate">RIB: {{ trx.uiType === 'CREDIT' ? trx.senderRib : trx.receiverRib }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-right shrink-0 pl-4">
+        <p class="font-bold text-lg sm:text-xl" [ngClass]="trx.uiType === 'CREDIT' ? 'text-green-600' : 'text-red-600'">
+          {{ trx.uiType === 'CREDIT' ? '+' : '-' }}{{ trx.amount | number:'1.2-2' }}
+        </p>
+        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-0.5">MAD</p>
+      </div>
+
+    </div>
+  </div>
+</div>

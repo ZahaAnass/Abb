@@ -1,2 +1,15 @@
-/* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
+
+@theme {
+  /* Al Barid Bank Official Brand Colors */
+  --color-abb-yellow: #DCA819;
+  --color-abb-dark: #4A4543;
+  --color-abb-light: #F8F9FA;
+}
+
+/* Optional: Add a smooth global font and background */
+@layer base {
+  body {
+    @apply bg-abb-light text-gray-800 antialiased;
+  }
+}

@@ -3,6 +3,7 @@ package com.abb.Abb.controller;
 import com.abb.Abb.dto.TransferRequest;
 import com.abb.Abb.entity.Client;
 import com.abb.Abb.entity.Transaction;
+import com.abb.Abb.service.ExcelService;
 import com.abb.Abb.service.PdfService;
 import com.abb.Abb.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class TransactionController {
 
     @Autowired
     private PdfService pdfService;
+
+    @Autowired
+    private ExcelService excelService;
 
     @Autowired
     private com.abb.Abb.repository.ClientRepository clientRepository;
@@ -69,6 +73,22 @@ public class TransactionController {
                 .header(org.springframework.http.HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=releve_bancaire.pdf")
                 .contentType(org.springframework.http.MediaType.APPLICATION_PDF)
                 .body(pdfBytes);
+    }
+
+    @GetMapping("/export/excel")
+    public ResponseEntity<byte[]> exportHistoryToExcel(Authentication authentication) {
+        String email = authentication.getName();
+        Client client = clientRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Client introuvable"));
+
+        List<Transaction> history = transactionService.getHistoriqueClient(email);
+        byte[] excelBytes = excelService.genererReleveExcel(client, history);
+
+        return org.springframework.http.ResponseEntity.ok()
+                .header(org.springframework.http.HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=releve_bancaire.xlsx")
+                // This is the official MIME type for .xlsx files
+                .contentType(org.springframework.http.MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
+                .body(excelBytes);
     }
 
 }

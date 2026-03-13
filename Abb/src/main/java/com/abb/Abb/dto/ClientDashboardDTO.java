@@ -12,6 +12,7 @@ import java.util.List;
 public class ClientDashboardDTO {
     private String name;
     private String rib;
+    private Integer numberOfTransactions;
     private BigDecimal solde;
     private List<Transaction> recentTransactions;
 }
