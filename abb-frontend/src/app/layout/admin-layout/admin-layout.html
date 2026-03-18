@@ -1,123 +1,155 @@
-<div class="h-screen w-full bg-gray-50 flex overflow-hidden">
-  
+<div class="h-screen w-full flex overflow-hidden bg-gray-50 font-sans">
+
   <div
     *ngIf="isMobileMenuOpen"
-    class="fixed inset-0 bg-gray-900/60 z-20 md:hidden backdrop-blur-sm transition-opacity"
+    class="fixed inset-0 bg-gray-950/40 backdrop-blur-sm z-20 md:hidden transition-opacity duration-300"
     (click)="closeMobileMenu()"
   ></div>
 
   <aside
     [ngClass]="isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'"
-    class="w-64 shrink-0 bg-abb-dark fixed inset-y-0 left-0 h-full z-30 flex flex-col transition-transform duration-300 ease-in-out md:translate-x-0 md:static shadow-2xl md:shadow-none border-r border-gray-800"
+    class="w-64 shrink-0 bg-[#2D2D2D] border-r border-[#3A3A3A] fixed inset-y-0 left-0 h-full z-30 flex flex-col transition-transform duration-300 ease-in-out md:translate-x-0 md:static shadow-xl md:shadow-none"
   >
-    <div class="h-20 shrink-0 flex items-center justify-center bg-abb-dark border-b border-abb-dark px-4">
-      <img src="logo.png" alt="Al Barid Bank" class="h-12 w-auto object-contain" />
+    <div class="h-20 shrink-0 flex items-center justify-center border-b border-[#3A3A3A] px-6 bg-[#252525]">
+      <img src="logo.png" alt="Al Barid Bank" class="h-10 w-auto object-contain drop-shadow-sm" />
     </div>
 
-    <nav class="p-4 flex-1 overflow-y-auto mt-2">
-      <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4 block px-4">
-        Espace Administration
-      </span>
-
-      <ul class="space-y-1">
+    <nav class="flex-1 overflow-y-auto px-4 py-6">
+      <p class="text-[11px] font-bold uppercase tracking-[0.2em] text-gray-500 px-3 mb-4">Administration</p>
+      
+      <ul class="space-y-1.5">
         <li>
           <a
             routerLink="/admin/dashboard"
-            routerLinkActive="bg-abb-yellow/10 text-abb-yellow border-r-4 border-abb-yellow"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/5 hover:text-white font-medium transition-all"
+            routerLinkActive="bg-[#EBB700]/10 text-[#EBB700]"
+            [routerLinkActiveOptions]="{exact: false}"
+            class="flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all group"
             (click)="closeMobileMenu()"
           >
-            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-            <span class="truncate">Tableau de bord</span>
+            <svg class="w-5 h-5 shrink-0 group-[.active]:text-[#EBB700]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+            <span>Tableau de bord</span>
           </a>
         </li>
+
         <li>
           <a
             routerLink="/admin/clients"
-            routerLinkActive="bg-abb-yellow/10 text-abb-yellow border-r-4 border-abb-yellow"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/5 hover:text-white font-medium transition-all"
+            routerLinkActive="bg-[#EBB700]/10 text-[#EBB700]"
+            [routerLinkActiveOptions]="{exact: false}"
+            class="flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all group"
             (click)="closeMobileMenu()"
           >
-            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-            <span class="truncate">Gestion Clients</span>
+            <svg class="w-5 h-5 shrink-0 group-[.active]:text-[#EBB700]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+            <span>Gestion Clients</span>
           </a>
         </li>
-        <li>
-          <a
-            routerLink="/admin/employees"
-            routerLinkActive="bg-abb-yellow/10 text-abb-yellow border-r-4 border-abb-yellow"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/5 hover:text-white font-medium transition-all"
-            (click)="closeMobileMenu()"
-          >
-            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-            <span class="truncate">Employés</span>
-          </a>
-        </li>
-        <li>
-          <a
-            routerLink="/admin/create-employee"
-            routerLinkActive="bg-abb-yellow/10 text-abb-yellow border-r-4 border-abb-yellow"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/5 hover:text-white font-medium transition-all"
-            (click)="closeMobileMenu()"
-          >
-            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path></svg>
-            <span class="truncate">Créer Compte Emp</span>
-          </a>
-        </li>
+
         <li>
           <a
             routerLink="/admin/transactions"
-            routerLinkActive="bg-abb-yellow/10 text-abb-yellow border-r-4 border-abb-yellow"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/5 hover:text-white font-medium transition-all"
+            routerLinkActive="bg-[#EBB700]/10 text-[#EBB700]"
+            [routerLinkActiveOptions]="{exact: false}"
+            class="flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all group"
             (click)="closeMobileMenu()"
           >
-            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
-            <span class="truncate">Transactions</span>
+            <svg class="w-5 h-5 shrink-0 group-[.active]:text-[#EBB700]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+            <span>Transactions</span>
+          </a>
+        </li>
+
+        <li class="pt-6 pb-2">
+          <p class="text-[11px] font-bold uppercase tracking-[0.2em] text-gray-500 px-3">Personnel</p>
+        </li>
+
+        <li>
+          <a
+            routerLink="/admin/employees"
+            routerLinkActive="bg-[#EBB700]/10 text-[#EBB700]"
+            [routerLinkActiveOptions]="{exact: false}"
+            class="flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all group"
+            (click)="closeMobileMenu()"
+          >
+            <svg class="w-5 h-5 shrink-0 group-[.active]:text-[#EBB700]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            <span>Employés</span>
+          </a>
+        </li>
+
+        <li>
+          <a
+            routerLink="/admin/create-employee"
+            routerLinkActive="bg-[#EBB700]/10 text-[#EBB700]"
+            [routerLinkActiveOptions]="{exact: false}"
+            class="flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all group"
+            (click)="closeMobileMenu()"
+          >
+            <svg class="w-5 h-5 shrink-0 group-[.active]:text-[#EBB700]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
+            <span>Créer Compte Emp</span>
           </a>
         </li>
       </ul>
     </nav>
 
-    <div class="p-4 shrink-0 border-t border-white/10 text-center">
-      <p class="text-xs text-gray-500">© 2026 Al Barid Bank</p>
+    <div class="shrink-0 border-t border-[#3A3A3A] p-4 bg-[#252525]">
+      <div class="flex items-center gap-3 px-3 py-2 rounded-xl bg-white/5 border border-white/10">
+        <div class="w-8 h-8 rounded-lg bg-[#EBB700] text-[#2D2D2D] flex items-center justify-center text-sm font-black shrink-0 shadow-inner">
+          {{ userEmail.charAt(0).toUpperCase() }}
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-xs font-bold text-white truncate">{{ userEmail }}</p>
+          <p class="text-[10px] text-gray-400 font-medium capitalize tracking-wide">{{ userRole }}</p>
+        </div>
+      </div>
     </div>
   </aside>
 
-  <div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
-    
-    <header class="h-20 shrink-0 bg-white border-b border-gray-200 flex items-center justify-between px-4 sm:px-8 shadow-sm z-10">
-      <div class="flex items-center">
+  <div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden bg-slate-50">
+
+    <header class="h-20 shrink-0 bg-white border-b border-gray-100 flex items-center justify-between px-6 lg:px-10 z-10 shadow-[0_4px_20px_-15px_rgba(0,0,0,0.1)]">
+      
+      <div class="flex items-center gap-4">
         <button
           (click)="toggleMobileMenu()"
-          class="md:hidden p-2 text-gray-500 hover:text-abb-yellow mr-3 rounded-md focus:outline-none bg-gray-50 border border-gray-200"
+          class="md:hidden p-2 text-gray-400 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-all"
         >
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
-        <h2 class="hidden sm:block text-xl font-bold text-gray-800 tracking-tight">
-          Portail Administrateur
-        </h2>
-      </div>
 
-      <div class="flex items-center gap-4 sm:gap-6">
-        <div class="flex items-center gap-3">
-          <div class="hidden sm:block text-right">
-            <p class="text-sm font-bold text-gray-900">{{ userEmail }}</p>
-            <p class="text-xs text-gray-500 capitalize font-medium">{{ userRole }}</p>
-          </div>
-          <div class="w-10 h-10 shrink-0 bg-yellow-100 rounded-full flex items-center justify-center text-abb-yellow font-bold border border-yellow-200 shadow-sm">
-            {{ userEmail.charAt(0).toUpperCase() }}
+        <div>
+          <h2 class="hidden sm:block text-xl font-extrabold text-gray-800 tracking-tight">Portail Administrateur</h2>
+          <div class="hidden md:flex items-center gap-2 mt-0.5">
+            <span class="text-[10px] font-bold uppercase tracking-widest text-[#EBB700]">Al Barid Bank</span>
+            <span class="text-gray-300 text-xs">•</span>
+            <span class="text-[10px] font-semibold uppercase tracking-widest text-gray-400">Système Central</span>
           </div>
         </div>
+      </div>
 
-        <div class="h-8 w-px bg-gray-200"></div>
+      <div class="flex items-center gap-5">
+        
+        <div class="hidden sm:inline-flex items-center gap-2 text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-full px-3 py-1.5 shadow-sm">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+          </span>
+          Système En Ligne
+        </div>
 
-        <button (click)="onLogout()" class="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-full transition-all" title="Déconnexion">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+        <div class="w-px h-6 bg-gray-200 hidden sm:block"></div>
+
+        <button
+          (click)="onLogout()"
+          class="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all border border-transparent hover:border-red-100 group"
+          title="Déconnexion"
+        >
+          <span class="hidden sm:block">Déconnexion</span>
+          <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
         </button>
       </div>
     </header>
 
-    <main class="flex-1 overflow-y-auto p-4 sm:p-8 bg-gray-50/50 relative">
+    <main class="flex-1 overflow-y-auto p-4 sm:p-8 lg:p-10 relative">
+      <div class="absolute top-0 left-0 w-full h-64 bg-linear-to-b from-white to-transparent -z-10"></div>
+      
       <router-outlet></router-outlet>
     </main>
   </div>

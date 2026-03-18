@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
@@ -9,16 +9,18 @@ import { AuthService } from '../../core/services/auth.service';
   imports: [CommonModule, RouterModule],
   templateUrl: './admin-layout.html'
 })
-export class AdminLayoutComponent {
+export class AdminLayoutComponent implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
 
   isMobileMenuOpen = false;
+  userEmail = 'admin@bank.com';
+  userRole = 'Administrator';
 
-  // Assuming you have a way to get the current user from your AuthService
-  // If not, you can hardcode this to 'Admin' for now!
-  userEmail = 'admin@bank.com'; 
-  userRole = 'Administrateur';
+  ngOnInit() {
+    this.userEmail = this.authService.getUserEmail() || 'admin@bank.com';
+    this.userRole = this.authService.getUserRole()?.replace('ROLE_', '') || 'ADMIN';
+  }
 
   toggleMobileMenu() {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
@@ -30,6 +32,6 @@ export class AdminLayoutComponent {
 
   onLogout() {
     this.authService.logout();
-    this.router.navigate(['/auth/login']);
+    this.router.navigate(['/login']);
   }
 }

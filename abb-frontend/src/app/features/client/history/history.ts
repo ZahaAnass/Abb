@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TransactionService } from '../../../core/services/transaction.service';
 import { AccountService } from '../../../core/services/account.service';
@@ -15,7 +15,7 @@ interface UITransaction extends Transaction {
   templateUrl: './history.html'
 })
 export class HistoryComponent implements OnInit {
-  
+
   private transactionService = inject(TransactionService);
   private accountService = inject(AccountService);
   private cdr = inject(ChangeDetectorRef);
@@ -23,8 +23,30 @@ export class HistoryComponent implements OnInit {
   uiTransactions: UITransaction[] = [];
   loading = true;
   downloadingPdf = false;
-  errorMessage = '';
   downloadingExcel = false;
+  errorMessage = '';
+
+  // ── Computed summary values used by the template ──────────────────────────
+  get creditCount(): number {
+    return this.uiTransactions.filter(t => t.uiType === 'CREDIT').length;
+  }
+
+  get debitCount(): number {
+    return this.uiTransactions.filter(t => t.uiType === 'DEBIT').length;
+  }
+
+  get totalCredit(): number {
+    return this.uiTransactions
+      .filter(t => t.uiType === 'CREDIT')
+      .reduce((sum, t) => sum + t.amount, 0);
+  }
+
+  get totalDebit(): number {
+    return this.uiTransactions
+      .filter(t => t.uiType === 'DEBIT')
+      .reduce((sum, t) => sum + t.amount, 0);
+  }
+  // ──────────────────────────────────────────────────────────────────────────
 
   ngOnInit(): void {
     this.loadHistory();
@@ -38,26 +60,28 @@ export class HistoryComponent implements OnInit {
         this.transactionService.getHistory().subscribe({
           next: (response: any) => {
             const history: Transaction[] = response.transactions || [];
-            
+
             this.uiTransactions = history.map(trx => ({
               ...trx,
               uiType: trx.receiverRib === myRib ? 'CREDIT' : 'DEBIT'
             }));
 
-            this.uiTransactions.sort((a, b) => new Date(b.transactionDate).getTime() - new Date(a.transactionDate).getTime());
+            this.uiTransactions.sort(
+              (a, b) => new Date(b.transactionDate).getTime() - new Date(a.transactionDate).getTime()
+            );
 
             this.loading = false;
             this.cdr.detectChanges();
           },
-          error: (err) => {
+          error: () => {
             this.errorMessage = "Impossible de charger l'historique des transactions.";
             this.loading = false;
             this.cdr.detectChanges();
           }
         });
       },
-      error: (err) => {
-        this.errorMessage = "Erreur lors du chargement des données du compte.";
+      error: () => {
+        this.errorMessage = 'Erreur lors du chargement des données du compte.';
         this.loading = false;
         this.cdr.detectChanges();
       }
@@ -75,14 +99,12 @@ export class HistoryComponent implements OnInit {
         link.href = url;
         link.download = 'releve_bancaire.pdf';
         link.click();
-        
         window.URL.revokeObjectURL(url);
         this.downloadingPdf = false;
         this.cdr.detectChanges();
       },
-      error: (err) => {
-        console.error("Error downloading PDF", err);
-        alert("Impossible de télécharger le relevé PDF pour le moment.");
+      error: () => {
+        alert('Impossible de télécharger le relevé PDF pour le moment.');
         this.downloadingPdf = false;
         this.cdr.detectChanges();
       }
@@ -100,14 +122,12 @@ export class HistoryComponent implements OnInit {
         link.href = url;
         link.download = 'releve_bancaire.xlsx';
         link.click();
-        
         window.URL.revokeObjectURL(url);
         this.downloadingExcel = false;
         this.cdr.detectChanges();
       },
-      error: (err) => {
-        console.error("Error downloading Excel", err);
-        alert("Impossible de télécharger le relevé Excel pour le moment.");
+      error: () => {
+        alert('Impossible de télécharger le relevé Excel pour le moment.');
         this.downloadingExcel = false;
         this.cdr.detectChanges();
       }

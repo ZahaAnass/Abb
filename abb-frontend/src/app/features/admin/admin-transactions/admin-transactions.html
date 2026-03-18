@@ -1,499 +1,211 @@
-<div class="max-w-7xl mx-auto pb-12">
+<div class="max-w-6xl mx-auto pb-12">
+
+  <!-- Page Header -->
   <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
     <div>
-      <h1 class="text-2xl font-bold text-gray-900">Suivi des Transactions</h1>
-      <p class="text-gray-500 text-sm mt-1">Audit global de tous les mouvements bancaires.</p>
+      <h1 class="text-2xl font-bold tracking-tight text-gray-900">Transaction Audit</h1>
+      <p class="text-sm text-gray-500 mt-0.5">Global audit of all bank movements.</p>
     </div>
-
-    <div
-      *ngIf="!loading"
-      class="bg-blue-50 text-blue-700 px-4 py-2 rounded-lg font-bold text-sm border border-blue-100 shadow-sm flex items-center gap-2"
-    >
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
-        ></path>
-      </svg>
-      {{ transactions.length }} Mouvements
+    <div *ngIf="!loading" class="inline-flex items-center gap-1.5 text-sm font-semibold text-blue-600 bg-blue-50 border border-blue-100 rounded-full px-3 py-1.5">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M6 3H4a1.5 1.5 0 00-1.5 1.5v7A1.5 1.5 0 004 13h6a1.5 1.5 0 001.5-1.5V4.5A1.5 1.5 0 0010 3H8M6 3a1 1 0 001 1h2a1 1 0 001-1M6 3a1 1 0 011-1h2a1 1 0 011 1m-3 5l1.5 1.5L11 6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      {{ transactions.length }} movements
     </div>
   </div>
 
-  <div
-    *ngIf="!loading && !errorMessage"
-    class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-4"
-  >
-    <div class="relative w-full max-w-sm">
-      <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-        <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-          ></path>
-        </svg>
-      </div>
+  <!-- Toolbar -->
+  <div *ngIf="!loading && !errorMessage" class="flex flex-col sm:flex-row items-center justify-between gap-3 mb-4">
+
+    <!-- Search -->
+    <div class="relative w-full max-w-xs">
+      <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.4"/><path d="M10 10l2.5 2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
       <input
         type="text"
         [(ngModel)]="searchTerm"
         (ngModelChange)="applyFilter()"
-        placeholder="Rechercher par description ou RIB..."
-        class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 shadow-sm outline-none transition-all"
+        placeholder="Search description or RIB…"
+        class="w-full pl-9 pr-4 py-2 text-sm bg-white border border-gray-200 rounded-lg outline-none focus:border-gray-400 focus:ring-2 focus:ring-gray-100 transition-all placeholder-gray-300"
       />
     </div>
 
-    <div class="relative w-full sm:w-auto">
+    <!-- Column toggle -->
+    <div class="relative">
       <button
         (click)="isColumnDropdownOpen = !isColumnDropdownOpen"
-        class="w-full sm:w-auto px-4 py-2.5 bg-white border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none flex items-center justify-between gap-2 shadow-sm transition-all"
+        class="inline-flex items-center gap-2 text-sm font-semibold text-gray-600 bg-white border border-gray-200 rounded-lg px-3 py-2 hover:bg-gray-50 transition-colors outline-none"
       >
-        Colonnes
-        <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M19 9l-7 7-7-7"
-          ></path>
-        </svg>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 3h12M3 7h8M5 11h4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        Columns
       </button>
-
-      <div
-        *ngIf="isColumnDropdownOpen"
-        class="fixed inset-0 z-10"
-        (click)="isColumnDropdownOpen = false"
-      ></div>
-
-      <div
-        *ngIf="isColumnDropdownOpen"
-        class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-20 p-2 flex flex-col gap-1"
-      >
-        <label
-          class="flex items-center gap-3 px-2 py-1.5 hover:bg-gray-50 rounded-md cursor-pointer text-sm text-gray-700 select-none"
-        >
-          <input
-            type="checkbox"
-            [(ngModel)]="columnVisibility.date"
-            class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer"
-          />
-          Date
+      <div *ngIf="isColumnDropdownOpen" class="fixed inset-0 z-10" (click)="isColumnDropdownOpen = false"></div>
+      <div *ngIf="isColumnDropdownOpen" class="absolute right-0 mt-1.5 w-44 bg-white border border-gray-200 rounded-xl shadow-lg z-20 p-1.5 flex flex-col gap-0.5">
+        <label class="flex items-center gap-2.5 px-2.5 py-1.5 text-sm text-gray-700 hover:bg-gray-50 rounded-lg cursor-pointer select-none">
+          <input type="checkbox" [(ngModel)]="columnVisibility.date" class="accent-gray-900 cursor-pointer" /> Date
         </label>
-        <label
-          class="flex items-center gap-3 px-2 py-1.5 hover:bg-gray-50 rounded-md cursor-pointer text-sm text-gray-700 select-none"
-        >
-          <input
-            type="checkbox"
-            [(ngModel)]="columnVisibility.description"
-            class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer"
-          />
-          Description
+        <label class="flex items-center gap-2.5 px-2.5 py-1.5 text-sm text-gray-700 hover:bg-gray-50 rounded-lg cursor-pointer select-none">
+          <input type="checkbox" [(ngModel)]="columnVisibility.description" class="accent-gray-900 cursor-pointer" /> Description
         </label>
-        <label
-          class="flex items-center gap-3 px-2 py-1.5 hover:bg-gray-50 rounded-md cursor-pointer text-sm text-gray-700 select-none"
-        >
-          <input
-            type="checkbox"
-            [(ngModel)]="columnVisibility.sender"
-            class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer"
-          />
-          Émetteur
+        <label class="flex items-center gap-2.5 px-2.5 py-1.5 text-sm text-gray-700 hover:bg-gray-50 rounded-lg cursor-pointer select-none">
+          <input type="checkbox" [(ngModel)]="columnVisibility.sender" class="accent-gray-900 cursor-pointer" /> Sender
         </label>
-        <label
-          class="flex items-center gap-3 px-2 py-1.5 hover:bg-gray-50 rounded-md cursor-pointer text-sm text-gray-700 select-none"
-        >
-          <input
-            type="checkbox"
-            [(ngModel)]="columnVisibility.receiver"
-            class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer"
-          />
-          Bénéficiaire
+        <label class="flex items-center gap-2.5 px-2.5 py-1.5 text-sm text-gray-700 hover:bg-gray-50 rounded-lg cursor-pointer select-none">
+          <input type="checkbox" [(ngModel)]="columnVisibility.receiver" class="accent-gray-900 cursor-pointer" /> Receiver
         </label>
-        <label
-          class="flex items-center gap-3 px-2 py-1.5 hover:bg-gray-50 rounded-md cursor-pointer text-sm text-gray-700 select-none"
-        >
-          <input
-            type="checkbox"
-            [(ngModel)]="columnVisibility.amount"
-            class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer"
-          />
-          Montant
+        <label class="flex items-center gap-2.5 px-2.5 py-1.5 text-sm text-gray-700 hover:bg-gray-50 rounded-lg cursor-pointer select-none">
+          <input type="checkbox" [(ngModel)]="columnVisibility.amount" class="accent-gray-900 cursor-pointer" /> Amount
         </label>
       </div>
     </div>
   </div>
 
-  <div *ngIf="loading" class="flex flex-col items-center justify-center py-20">
-    <svg
-      class="animate-spin h-10 w-10 text-abb-yellow mb-4"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <circle
-        class="opacity-25"
-        cx="12"
-        cy="12"
-        r="10"
-        stroke="currentColor"
-        stroke-width="4"
-      ></circle>
-      <path
-        class="opacity-75"
-        fill="currentColor"
-        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-      ></path>
-    </svg>
-    <p class="text-gray-500 font-medium">Chargement des transactions...</p>
+  <!-- Loading -->
+  <div *ngIf="loading" class="flex flex-col items-center justify-center py-24 gap-3">
+    <div class="w-8 h-8 border-2 border-gray-200 border-t-abb-yellow rounded-full animate-spin"></div>
+    <p class="text-sm text-gray-400 font-medium">Loading transactions…</p>
   </div>
 
-  <div *ngIf="errorMessage" class="bg-red-50 border-l-4 border-red-500 p-4 rounded-md mb-6">
-    <p class="text-red-700 font-medium">{{ errorMessage }}</p>
+  <!-- Error -->
+  <div *ngIf="errorMessage" class="flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 text-sm font-medium px-4 py-3 rounded-xl mb-4">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.4"/><path d="M7 4.5V7M7 9.5h.01" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+    {{ errorMessage }}
   </div>
 
-  <div
-    *ngIf="!loading && !errorMessage"
-    class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden"
-  >
+  <!-- Table -->
+  <div *ngIf="!loading && !errorMessage" class="bg-white border border-gray-100 rounded-2xl overflow-hidden">
     <div class="overflow-x-auto">
-      <table class="w-full text-left border-collapse">
+      <table class="w-full text-sm">
         <thead>
-          <tr
-            class="bg-gray-50/80 text-gray-500 text-xs uppercase tracking-wider border-b border-gray-200 select-none"
-          >
-            <th
-              *ngIf="columnVisibility.date"
-              class="px-6 py-3 font-semibold group cursor-pointer hover:bg-gray-100 transition-colors"
-              (click)="sortBy('transactionDate')"
-            >
-              <div class="flex items-center gap-2">
+          <tr class="bg-gray-50/80 border-b border-gray-100">
+
+            <th *ngIf="columnVisibility.date"
+              class="px-6 py-2.5 text-left text-[10px] font-bold uppercase tracking-widest text-gray-400 cursor-pointer hover:text-gray-600 transition-colors select-none whitespace-nowrap"
+              (click)="sortBy('transactionDate')">
+              <span class="inline-flex items-center gap-1.5">
                 Date
-                <svg
-                  *ngIf="sortColumn !== 'transactionDate'"
-                  class="w-4 h-4 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"
-                  ></path>
-                </svg>
-                <svg
-                  *ngIf="sortColumn === 'transactionDate' && sortDirection === 'asc'"
-                  class="w-4 h-4 text-gray-900"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 15l7-7 7 7"
-                  ></path>
-                </svg>
-                <svg
-                  *ngIf="sortColumn === 'transactionDate' && sortDirection === 'desc'"
-                  class="w-4 h-4 text-gray-900"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 9l-7 7-7-7"
-                  ></path>
-                </svg>
-              </div>
+                <svg *ngIf="sortColumn === 'transactionDate' && sortDirection === 'asc'" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 2l3 4H2l3-4z" fill="currentColor"/></svg>
+                <svg *ngIf="sortColumn === 'transactionDate' && sortDirection === 'desc'" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 8L2 4h6L5 8z" fill="currentColor"/></svg>
+                <svg *ngIf="sortColumn !== 'transactionDate'" width="10" height="10" viewBox="0 0 10 10" fill="none" class="opacity-30"><path d="M5 2l3 4H2l3-4zM5 8L2 4h6L5 8z" fill="currentColor"/></svg>
+              </span>
             </th>
 
-            <th
-              *ngIf="columnVisibility.description"
-              class="px-6 py-3 font-semibold group cursor-pointer hover:bg-gray-100 transition-colors"
-              (click)="sortBy('description')"
-            >
-              <div class="flex items-center gap-2">
+            <th *ngIf="columnVisibility.description"
+              class="px-6 py-2.5 text-left text-[10px] font-bold uppercase tracking-widest text-gray-400 cursor-pointer hover:text-gray-600 transition-colors select-none whitespace-nowrap"
+              (click)="sortBy('description')">
+              <span class="inline-flex items-center gap-1.5">
                 Description
-                <svg
-                  *ngIf="sortColumn !== 'description'"
-                  class="w-4 h-4 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"
-                  ></path>
-                </svg>
-                <svg
-                  *ngIf="sortColumn === 'description' && sortDirection === 'asc'"
-                  class="w-4 h-4 text-gray-900"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 15l7-7 7 7"
-                  ></path>
-                </svg>
-                <svg
-                  *ngIf="sortColumn === 'description' && sortDirection === 'desc'"
-                  class="w-4 h-4 text-gray-900"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 9l-7 7-7-7"
-                  ></path>
-                </svg>
-              </div>
+                <svg *ngIf="sortColumn === 'description' && sortDirection === 'asc'" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 2l3 4H2l3-4z" fill="currentColor"/></svg>
+                <svg *ngIf="sortColumn === 'description' && sortDirection === 'desc'" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 8L2 4h6L5 8z" fill="currentColor"/></svg>
+                <svg *ngIf="sortColumn !== 'description'" width="10" height="10" viewBox="0 0 10 10" fill="none" class="opacity-30"><path d="M5 2l3 4H2l3-4zM5 8L2 4h6L5 8z" fill="currentColor"/></svg>
+              </span>
             </th>
 
-            <th
-              *ngIf="columnVisibility.sender"
-              class="px-6 py-3 font-semibold group cursor-pointer hover:bg-gray-100 transition-colors"
-              (click)="sortBy('senderRib')"
-            >
-              <div class="flex items-center gap-2">
-                Émetteur
-                <svg
-                  *ngIf="sortColumn !== 'senderRib'"
-                  class="w-4 h-4 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"
-                  ></path>
-                </svg>
-                <svg
-                  *ngIf="sortColumn === 'senderRib' && sortDirection === 'asc'"
-                  class="w-4 h-4 text-gray-900"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 15l7-7 7 7"
-                  ></path>
-                </svg>
-                <svg
-                  *ngIf="sortColumn === 'senderRib' && sortDirection === 'desc'"
-                  class="w-4 h-4 text-gray-900"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 9l-7 7-7-7"
-                  ></path>
-                </svg>
-              </div>
+            <th *ngIf="columnVisibility.sender"
+              class="px-6 py-2.5 text-left text-[10px] font-bold uppercase tracking-widest text-gray-400 cursor-pointer hover:text-gray-600 transition-colors select-none whitespace-nowrap"
+              (click)="sortBy('senderRib')">
+              <span class="inline-flex items-center gap-1.5">
+                Sender RIB
+                <svg *ngIf="sortColumn === 'senderRib' && sortDirection === 'asc'" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 2l3 4H2l3-4z" fill="currentColor"/></svg>
+                <svg *ngIf="sortColumn === 'senderRib' && sortDirection === 'desc'" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 8L2 4h6L5 8z" fill="currentColor"/></svg>
+                <svg *ngIf="sortColumn !== 'senderRib'" width="10" height="10" viewBox="0 0 10 10" fill="none" class="opacity-30"><path d="M5 2l3 4H2l3-4zM5 8L2 4h6L5 8z" fill="currentColor"/></svg>
+              </span>
             </th>
 
-            <th
-              *ngIf="columnVisibility.receiver"
-              class="px-6 py-3 font-semibold group cursor-pointer hover:bg-gray-100 transition-colors"
-              (click)="sortBy('receiverRib')"
-            >
-              <div class="flex items-center gap-2">
-                Bénéficiaire
-                <svg
-                  *ngIf="sortColumn !== 'receiverRib'"
-                  class="w-4 h-4 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"
-                  ></path>
-                </svg>
-                <svg
-                  *ngIf="sortColumn === 'receiverRib' && sortDirection === 'asc'"
-                  class="w-4 h-4 text-gray-900"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 15l7-7 7 7"
-                  ></path>
-                </svg>
-                <svg
-                  *ngIf="sortColumn === 'receiverRib' && sortDirection === 'desc'"
-                  class="w-4 h-4 text-gray-900"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 9l-7 7-7-7"
-                  ></path>
-                </svg>
-              </div>
+            <th *ngIf="columnVisibility.receiver"
+              class="px-6 py-2.5 text-left text-[10px] font-bold uppercase tracking-widest text-gray-400 cursor-pointer hover:text-gray-600 transition-colors select-none whitespace-nowrap"
+              (click)="sortBy('receiverRib')">
+              <span class="inline-flex items-center gap-1.5">
+                Receiver RIB
+                <svg *ngIf="sortColumn === 'receiverRib' && sortDirection === 'asc'" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 2l3 4H2l3-4z" fill="currentColor"/></svg>
+                <svg *ngIf="sortColumn === 'receiverRib' && sortDirection === 'desc'" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 8L2 4h6L5 8z" fill="currentColor"/></svg>
+                <svg *ngIf="sortColumn !== 'receiverRib'" width="10" height="10" viewBox="0 0 10 10" fill="none" class="opacity-30"><path d="M5 2l3 4H2l3-4zM5 8L2 4h6L5 8z" fill="currentColor"/></svg>
+              </span>
             </th>
 
-            <th
-              *ngIf="columnVisibility.amount"
-              class="px-6 py-3 font-semibold group cursor-pointer hover:bg-gray-100 transition-colors"
-              (click)="sortBy('amount')"
-            >
-              <div class="flex items-center justify-end gap-2">
-                <svg
-                  *ngIf="sortColumn !== 'amount'"
-                  class="w-4 h-4 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"
-                  ></path>
-                </svg>
-                <svg
-                  *ngIf="sortColumn === 'amount' && sortDirection === 'asc'"
-                  class="w-4 h-4 text-gray-900"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 15l7-7 7 7"
-                  ></path>
-                </svg>
-                <svg
-                  *ngIf="sortColumn === 'amount' && sortDirection === 'desc'"
-                  class="w-4 h-4 text-gray-900"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 9l-7 7-7-7"
-                  ></path>
-                </svg>
-                Montant
-              </div>
+            <th *ngIf="columnVisibility.amount"
+              class="px-6 py-2.5 text-right text-[10px] font-bold uppercase tracking-widest text-gray-400 cursor-pointer hover:text-gray-600 transition-colors select-none whitespace-nowrap"
+              (click)="sortBy('amount')">
+              <span class="inline-flex items-center justify-end gap-1.5">
+                Amount
+                <svg *ngIf="sortColumn === 'amount' && sortDirection === 'asc'" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 2l3 4H2l3-4z" fill="currentColor"/></svg>
+                <svg *ngIf="sortColumn === 'amount' && sortDirection === 'desc'" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 8L2 4h6L5 8z" fill="currentColor"/></svg>
+                <svg *ngIf="sortColumn !== 'amount'" width="10" height="10" viewBox="0 0 10 10" fill="none" class="opacity-30"><path d="M5 2l3 4H2l3-4zM5 8L2 4h6L5 8z" fill="currentColor"/></svg>
+              </span>
             </th>
+
           </tr>
         </thead>
-        <tbody class="divide-y divide-gray-100 text-sm">
+        <tbody class="divide-y divide-gray-50">
+
           <tr *ngIf="paginatedTransactions.length === 0">
-            <td colspan="5" class="px-6 py-12 text-center text-gray-500">
-              Aucun résultat trouvé pour "{{ searchTerm }}".
+            <td colspan="5" class="px-6 py-14 text-center">
+              <div class="flex flex-col items-center gap-2">
+                <div class="w-10 h-10 rounded-xl bg-gray-50 text-gray-300 flex items-center justify-center">
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6 3H4a1.5 1.5 0 00-1.5 1.5v11A1.5 1.5 0 004 17h10a1.5 1.5 0 001.5-1.5V4.5A1.5 1.5 0 0014 3h-2M6 3a1 1 0 001 1h4a1 1 0 001-1M6 3a1 1 0 011-1h4a1 1 0 011 1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+                </div>
+                <p class="text-sm text-gray-400">No results for "{{ searchTerm }}"</p>
+              </div>
             </td>
           </tr>
 
-          <tr
-            *ngFor="let trx of paginatedTransactions"
-            class="hover:bg-blue-50/30 transition-colors"
-          >
-            <td
-              *ngIf="columnVisibility.date"
-              class="px-6 py-4 whitespace-nowrap text-gray-500 font-medium"
-            >
-              {{ trx.transactionDate | date: 'dd/MM/yyyy, HH:mm' }}
+          <tr *ngFor="let trx of paginatedTransactions" class="hover:bg-gray-50/60 transition-colors">
+
+            <!-- Date -->
+            <td *ngIf="columnVisibility.date" class="px-6 py-3.5 whitespace-nowrap">
+              <span class="text-gray-600">{{ trx.transactionDate | date:'dd MMM yyyy' }}</span>
+              <span class="text-gray-300 ml-1 text-xs">{{ trx.transactionDate | date:'HH:mm' }}</span>
             </td>
 
-            <td *ngIf="columnVisibility.description" class="px-6 py-4 font-medium text-gray-900">
-              {{ trx.description || 'Virement' }}
+            <!-- Description -->
+            <td *ngIf="columnVisibility.description" class="px-6 py-3.5">
+              <span class="font-semibold text-gray-900">{{ trx.description || 'Virement' }}</span>
             </td>
 
-            <td *ngIf="columnVisibility.sender" class="px-6 py-4 whitespace-nowrap">
-              <div
-                class="text-xs font-mono text-gray-600 bg-gray-50 px-2 py-1 rounded inline-block border border-gray-200"
-              >
-                {{ trx.senderRib }}
-              </div>
+            <!-- Sender RIB -->
+            <td *ngIf="columnVisibility.sender" class="px-6 py-3.5 whitespace-nowrap">
+              <span class="font-mono text-xs text-gray-500 bg-gray-50 border border-gray-200 rounded-md px-2 py-0.5">{{ trx.senderRib }}</span>
             </td>
 
-            <td *ngIf="columnVisibility.receiver" class="px-6 py-4 whitespace-nowrap">
-              <div
-                class="text-xs font-mono text-gray-600 bg-gray-50 px-2 py-1 rounded inline-block border border-gray-200"
-              >
-                {{ trx.receiverRib }}
-              </div>
+            <!-- Receiver RIB -->
+            <td *ngIf="columnVisibility.receiver" class="px-6 py-3.5 whitespace-nowrap">
+              <span class="font-mono text-xs text-gray-500 bg-gray-50 border border-gray-200 rounded-md px-2 py-0.5">{{ trx.receiverRib }}</span>
             </td>
 
-            <td *ngIf="columnVisibility.amount" class="px-6 py-4 whitespace-nowrap text-right">
-              <div class="font-bold text-gray-900">
-                {{ trx.amount | number: '1.2-2' }}
-                <span class="text-xs text-gray-400 uppercase tracking-wider ml-1">MAD</span>
-              </div>
+            <!-- Amount -->
+            <td *ngIf="columnVisibility.amount" class="px-6 py-3.5 whitespace-nowrap text-right">
+              <span class="font-bold text-gray-900 tabular-nums">{{ trx.amount | number:'1.2-2' }}</span>
+              <span class="text-[11px] font-semibold text-gray-400 ml-1">MAD</span>
             </td>
+
           </tr>
         </tbody>
       </table>
     </div>
 
-    <div class="px-6 py-4 border-t border-gray-200 bg-gray-50 flex items-center justify-between">
-      <div class="text-sm text-gray-500">
-        Page <span class="font-medium text-gray-900">{{ currentPage }}</span> sur
-        <span class="font-medium text-gray-900">{{ totalPages }}</span>
-      </div>
-      <div class="flex gap-2">
+    <!-- Pagination -->
+    <div class="flex items-center justify-between px-6 py-3.5 border-t border-gray-50 bg-gray-50/50">
+      <p class="text-sm text-gray-400">
+        Showing <span class="font-semibold text-gray-700">{{ (currentPage - 1) * pageSize + 1 }}–{{ currentPage * pageSize > filteredTransactions.length ? filteredTransactions.length : currentPage * pageSize }}</span>
+        of <span class="font-semibold text-gray-700">{{ filteredTransactions.length }}</span>
+      </p>
+      <div class="flex items-center gap-2">
         <button
           (click)="prevPage()"
           [disabled]="currentPage === 1"
-          class="px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+          class="inline-flex items-center gap-1.5 text-sm font-semibold text-gray-600 bg-white border border-gray-200 rounded-lg px-3 py-1.5 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
         >
-          Précédent
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8 2L4 6l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Prev
         </button>
+        <span class="text-sm font-semibold text-gray-500 px-1">{{ currentPage }} / {{ totalPages }}</span>
         <button
           (click)="nextPage()"
           [disabled]="currentPage === totalPages"
-          class="px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+          class="inline-flex items-center gap-1.5 text-sm font-semibold text-gray-600 bg-white border border-gray-200 rounded-lg px-3 py-1.5 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
         >
-          Suivant
+          Next
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
     </div>
   </div>
+
 </div>
