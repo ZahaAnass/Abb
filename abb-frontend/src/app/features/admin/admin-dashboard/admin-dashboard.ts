@@ -1,5 +1,5 @@
 import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { AdminService } from '../../../core/services/admin.service';
 import { AdminDashboardData } from '../../../models/bank.model';
@@ -18,6 +18,7 @@ export class AdminDashboardComponent implements OnInit {
   stats: AdminDashboardData | null = null;
   loading = true;
   errorMessage = '';
+  today = new Date();
 
   ngOnInit(): void {
     this.fetchStats();
@@ -32,7 +33,7 @@ export class AdminDashboardComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error fetching admin stats:', err);
-        this.errorMessage = 'Impossible de charger les statistiques. Veuillez vérifier la connexion au serveur.';
+        this.errorMessage = 'Unable to load statistics. Please check the server connection.';
         this.loading = false;
         this.cdr.detectChanges();
       }

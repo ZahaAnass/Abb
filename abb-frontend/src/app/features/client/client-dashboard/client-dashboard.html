@@ -1,154 +1,164 @@
-<div class="max-w-5xl mx-auto pb-12">
+<!-- 
+  ENHANCED: abb-frontend/src/app/features/client/client-dashboard/client-dashboard.html
+  Replace the existing file content with this
+-->
+
+<div style="max-width:1100px;margin:0 auto;">
 
   <!-- Loading -->
-  <div *ngIf="loading" class="flex flex-col items-center justify-center py-24 gap-3">
-    <div class="w-8 h-8 rounded-full border-2 border-gray-200 border-t-yellow-500 animate-spin"></div>
-    <p class="text-sm text-gray-400 font-medium">Loading your account…</p>
+  <div *ngIf="loading" class="flex flex-col items-center justify-center py-24 gap-4">
+    <div style="width:40px;height:40px;border-radius:50%;border:2px solid rgba(220,168,25,0.2);border-top-color:#DCA819;animation:spin 0.8s linear infinite;"></div>
+    <p style="font-size:0.875rem;color:#9CA3AF;font-weight:500;">Loading your account…</p>
   </div>
 
   <!-- Error -->
-  <div *ngIf="errorMessage" class="flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 text-sm font-medium rounded-xl px-4 py-3 mb-6">
-    <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="1.5"/><path d="M12 8v4M12 16h.01" stroke-width="1.5" stroke-linecap="round"/></svg>
-    {{ errorMessage }}
+  <div *ngIf="errorMessage" class="flex items-center gap-3 rounded-xl px-5 py-4 mb-6" style="background:#FEF2F2;border:1px solid #FECACA;">
+    <svg width="16" height="16" fill="none" stroke="#EF4444" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="1.5"/><path d="M12 8v4M12 16h.01" stroke-width="1.5" stroke-linecap="round"/></svg>
+    <span style="font-size:0.875rem;font-weight:500;color:#991B1B;">{{ errorMessage }}</span>
   </div>
 
   <ng-container *ngIf="!loading && dashboardData">
 
-    <!-- Page Header -->
-    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-8">
-      <div>
-        <div class="inline-flex items-center gap-1.5 text-xs font-semibold text-green-600 bg-green-50 border border-green-200 rounded-full px-2.5 py-1 mb-2">
-          <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
-          Active account
+    <!-- ── Hero / Welcome ──────────────────────────────────────────── -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-8">
+
+      <!-- Welcome + Balance Card (spans 2 cols) -->
+      <div class="lg:col-span-2 relative overflow-hidden rounded-2xl p-7" style="background:#111110;min-height:180px;">
+        <!-- Subtle grid texture -->
+        <div class="absolute inset-0 pointer-events-none" style="background-image:linear-gradient(rgba(255,255,255,0.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.015) 1px,transparent 1px);background-size:48px 48px;"></div>
+        <!-- Ambient gold glow -->
+        <div class="absolute bottom-0 right-0 w-64 h-64 pointer-events-none" style="background:radial-gradient(ellipse at 80% 120%,rgba(220,168,25,0.1) 0%,transparent 60%);"></div>
+        <!-- Corner ornament -->
+        <div class="absolute top-5 right-5 w-8 h-8" style="border-top:1px solid rgba(220,168,25,0.3);border-right:1px solid rgba(220,168,25,0.3);"></div>
+
+        <div class="relative z-10">
+          <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:rgba(220,168,25,0.7);margin-bottom:0.6rem;">Welcome back</div>
+          <div style="font-family:'Playfair Display',Georgia,serif;font-size:1.75rem;font-weight:400;color:#F5F0E8;line-height:1.2;margin-bottom:1.5rem;">
+            {{ dashboardData.name }}
+          </div>
+
+          <div class="flex items-end justify-between flex-wrap gap-4">
+            <div>
+              <div style="font-size:0.6rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:0.3rem;">Available Balance</div>
+              <div style="font-family:'Playfair Display',Georgia,serif;font-size:2.5rem;font-weight:500;color:#F5F0E8;line-height:1;">
+                {{ dashboardData.solde | number:'1.2-2' }}
+                <span style="font-size:1rem;color:#DCA819;margin-left:0.25rem;">MAD</span>
+              </div>
+            </div>
+            <a routerLink="/client/virement"
+              class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold transition-all hover:opacity-90 active:scale-[0.97]"
+              style="background:#DCA819;color:#0D0D0C;text-decoration:none;">
+              <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-width="2.2" stroke-linecap="round"/></svg>
+              New Transfer
+            </a>
+          </div>
         </div>
-        <h1 class="text-2xl font-bold tracking-tight text-gray-900">Good morning, {{ dashboardData.name }}</h1>
-        <p class="text-sm text-gray-400 mt-1">Here's what's happening with your account today.</p>
       </div>
-      <div class="flex items-center gap-2 flex-wrap">
-        <span class="inline-flex items-center gap-1.5 font-mono text-xs text-gray-500 bg-gray-50 border border-gray-200 rounded-lg px-3 py-2">
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2" stroke-width="1.5"/><path d="M2 10h20" stroke-width="1.5"/></svg>
-          {{ dashboardData.rib }}
-        </span>
-        <a routerLink="/client/virement" class="inline-flex items-center gap-1.5 bg-gray-900 hover:bg-gray-700 text-white text-sm font-semibold px-4 py-2 rounded-lg shadow-sm transition-all">
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16" stroke-width="2" stroke-linecap="round"/></svg>
-          New Transfer
-        </a>
+
+      <!-- Right Stats Column -->
+      <div class="flex flex-col gap-4">
+
+        <!-- RIB Card -->
+        <div class="rounded-2xl p-5 flex-1 flex flex-col justify-between" style="background:#FFFFFF;border:1px solid #E5E7EB;box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+          <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#9CA3AF;margin-bottom:0.75rem;">Account RIB</div>
+          <div class="font-mono text-sm font-semibold tracking-wider break-all" style="color:#374151;line-height:1.6;">{{ dashboardData.rib }}</div>
+        </div>
+
+        <!-- Movements Card -->
+        <div class="rounded-2xl p-5 flex items-center gap-4" style="background:#FFFFFF;border:1px solid #E5E7EB;box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style="background:rgba(59,130,246,0.08);color:#3B82F6;">
+            <svg width="17" height="17" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 12h16M14 6l6 6-6 6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#9CA3AF;margin-bottom:0.25rem;">Movements</div>
+            <div style="font-family:'Playfair Display',Georgia,serif;font-size:1.75rem;font-weight:500;color:#111827;line-height:1;">{{ dashboardData.numberOfTransactions }}</div>
+          </div>
+        </div>
+
       </div>
     </div>
 
-    <!-- Stats Grid -->
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+    <!-- ── Recent Transactions Table ──────────────────────────────── -->
+    <div class="rounded-2xl overflow-hidden" style="background:#FFFFFF;border:1px solid #E5E7EB;box-shadow:0 1px 3px rgba(0,0,0,0.04);">
 
-      <div class="col-span-2 sm:col-span-1 bg-white border border-yellow-300 rounded-2xl p-5 hover:shadow-md transition-all relative overflow-hidden">
-        <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-yellow-400"></div>
-        <div class="flex justify-between items-start mb-4">
-          <span class="text-xs font-bold tracking-widest uppercase text-gray-400">Balance</span>
-          <div class="w-8 h-8 rounded-lg bg-yellow-50 flex items-center justify-center text-yellow-600">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2" stroke-width="1.5"/><path d="M2 10h20" stroke-width="1.5"/><circle cx="7" cy="15" r="1" fill="currentColor"/></svg>
-          </div>
-        </div>
-        <div class="text-3xl font-extrabold tracking-tight text-gray-900 leading-none">{{ dashboardData.solde | number:'1.2-2' }}</div>
-        <div class="text-xs font-semibold text-gray-400 mt-2">MAD available</div>
-      </div>
-
-      <div class="bg-white border border-gray-100 rounded-2xl p-5 hover:shadow-md transition-all">
-        <div class="flex justify-between items-start mb-4">
-          <span class="text-xs font-bold tracking-widest uppercase text-gray-400">Movements</span>
-          <div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center text-blue-500">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 12h16M14 6l6 6-6 6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
-        <div class="text-3xl font-extrabold tracking-tight text-gray-900 leading-none">{{ dashboardData.numberOfTransactions }}</div>
-        <div class="text-xs font-semibold text-gray-400 mt-2">All time</div>
-      </div>
-
-      <div class="bg-white border border-gray-100 rounded-2xl p-5 opacity-50">
-        <div class="flex justify-between items-start mb-4">
-          <span class="text-xs font-bold tracking-widest uppercase text-gray-400">Spend</span>
-          <div class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-gray-400">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 18l4-5 4 3 4-7 4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
-        <div class="text-3xl font-extrabold tracking-tight text-gray-200 leading-none">—</div>
-        <div class="text-xs font-semibold text-gray-300 mt-2">Coming soon</div>
-      </div>
-
-      <div class="bg-white border border-gray-100 rounded-2xl p-5 opacity-50">
-        <div class="flex justify-between items-start mb-4">
-          <span class="text-xs font-bold tracking-widest uppercase text-gray-400">Messages</span>
-          <div class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-gray-400">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 4h16v12H4zM4 4l8 8 8-8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
-        <div class="text-3xl font-extrabold tracking-tight text-gray-200 leading-none">0</div>
-        <div class="text-xs font-semibold text-gray-300 mt-2">No messages</div>
-      </div>
-
-    </div>
-
-    <!-- Transactions Table -->
-    <div class="bg-white border border-gray-100 rounded-2xl overflow-hidden">
-      <div class="flex items-center justify-between px-6 py-4 border-b border-gray-50">
+      <!-- Table Header -->
+      <div class="flex items-center justify-between px-6 py-4" style="border-bottom:1px solid #F3F4F6;">
         <div>
-          <h2 class="text-sm font-bold text-gray-900">Recent Transactions</h2>
-          <p class="text-xs text-gray-400 mt-0.5">Your last {{ uiTransactions.length }} movements</p>
+          <div style="font-size:0.875rem;font-weight:700;color:#111827;">Recent Transactions</div>
+          <div style="font-size:0.75rem;color:#9CA3AF;margin-top:0.15rem;">Your last {{ uiTransactions.length }} movements</div>
         </div>
-        <a routerLink="/client/history" class="inline-flex items-center gap-1 text-xs font-semibold text-gray-400 hover:text-gray-900 transition-colors px-2 py-1 rounded-md hover:bg-gray-50">
+        <a routerLink="/client/history"
+          class="inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-semibold transition-all hover:bg-gray-50"
+          style="color:#6B7280;text-decoration:none;">
           View all
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 12h16M14 6l6 6-6 6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" stroke-width="2" stroke-linecap="round"/></svg>
         </a>
       </div>
 
-      <div class="overflow-x-auto">
-        <table class="w-full text-sm">
+      <!-- Empty State -->
+      <div *ngIf="uiTransactions.length === 0" class="py-16 flex flex-col items-center gap-3">
+        <div class="w-12 h-12 rounded-2xl flex items-center justify-center" style="background:#F9FAFB;color:#D1D5DB;">
+          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </div>
+        <p style="font-size:0.875rem;color:#9CA3AF;">No transactions yet</p>
+      </div>
+
+      <!-- Table -->
+      <div *ngIf="uiTransactions.length > 0" class="overflow-x-auto">
+        <table style="width:100%;border-collapse:collapse;">
           <thead>
-            <tr class="border-b border-gray-50 bg-gray-50/60">
-              <th class="px-6 py-3 text-left text-xs font-bold tracking-widest uppercase text-gray-400">Transaction</th>
-              <th class="px-6 py-3 text-left text-xs font-bold tracking-widest uppercase text-gray-400">Date</th>
-              <th class="px-6 py-3 text-right text-xs font-bold tracking-widest uppercase text-gray-400">Amount</th>
+            <tr style="background:#F9FAFB;border-bottom:1px solid #F3F4F6;">
+              <th style="padding:0.75rem 1.5rem;text-align:left;font-size:0.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#9CA3AF;">Transaction</th>
+              <th style="padding:0.75rem 1.5rem;text-align:left;font-size:0.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#9CA3AF;" class="hidden sm:table-cell">Date</th>
+              <th style="padding:0.75rem 1.5rem;text-align:right;font-size:0.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#9CA3AF;">Amount</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-gray-50">
+          <tbody>
+            <tr *ngFor="let trx of uiTransactions; let last = last"
+              [style.border-bottom]="last ? 'none' : '1px solid #F9FAFB'"
+              style="transition:background 0.1s;"
+              onmouseover="this.style.background='#FAFAFA'" onmouseout="this.style.background='transparent'">
 
-            <tr *ngIf="uiTransactions.length === 0">
-              <td colspan="3" class="text-center px-6 py-12">
-                <div class="flex flex-col items-center gap-2">
-                  <div class="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center text-gray-300">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2" stroke-width="1.4" stroke-linecap="round"/></svg>
-                  </div>
-                  <p class="text-sm text-gray-400">No transactions yet</p>
-                </div>
-              </td>
-            </tr>
-
-            <tr *ngFor="let trx of uiTransactions" class="hover:bg-gray-50/60 transition-colors">
-              <td class="px-6 py-4">
+              <td style="padding:1rem 1.5rem;">
                 <div class="flex items-center gap-3">
                   <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
-                    [class]="trx.uiType === 'CREDIT' ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-500'">
-                    <svg *ngIf="trx.uiType === 'CREDIT'" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16M6 14l6 6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <svg *ngIf="trx.uiType === 'DEBIT'" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 20V4M6 10l6-6 6 6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    [style.background]="trx.uiType === 'CREDIT' ? 'rgba(16,185,129,0.08)' : 'rgba(239,68,68,0.08)'"
+                    [style.color]="trx.uiType === 'CREDIT' ? '#10B981' : '#EF4444'">
+                    <svg *ngIf="trx.uiType === 'CREDIT'" width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16M6 14l6 6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <svg *ngIf="trx.uiType === 'DEBIT'" width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 20V4M6 10l6-6 6 6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </div>
                   <div>
-                    <div class="font-semibold text-gray-900">{{ trx.description }}</div>
-                    <div class="font-mono text-xs text-gray-400 mt-0.5">
-                      {{ trx.uiType === 'CREDIT' ? 'From ' + trx.senderRib : 'To ' + trx.receiverRib }}
+                    <div style="font-size:0.875rem;font-weight:600;color:#111827;">{{ trx.description }}</div>
+                    <div class="font-mono" style="font-size:0.7rem;color:#9CA3AF;margin-top:0.15rem;">
+                      {{ trx.uiType === 'CREDIT' ? '← ' + trx.senderRib : '→ ' + trx.receiverRib }}
                     </div>
                   </div>
                 </div>
               </td>
-              <td class="px-6 py-4 text-gray-400 whitespace-nowrap">{{ trx.transactionDate | date:'dd MMM yyyy, HH:mm' }}</td>
-              <td class="px-6 py-4 text-right whitespace-nowrap tabular-nums font-bold"
-                [class]="trx.uiType === 'CREDIT' ? 'text-green-600' : 'text-gray-900'">
-                {{ trx.uiType === 'CREDIT' ? '+' : '-' }}{{ trx.amount | number:'1.2-2' }}
-                <span class="text-xs font-semibold text-gray-300 ml-0.5">MAD</span>
-              </td>
-            </tr>
 
+              <td style="padding:1rem 1.5rem;font-size:0.8rem;color:#9CA3AF;white-space:nowrap;" class="hidden sm:table-cell">
+                {{ trx.transactionDate | date:'dd MMM yyyy, HH:mm' }}
+              </td>
+
+              <td style="padding:1rem 1.5rem;text-align:right;white-space:nowrap;">
+                <span style="font-size:0.9375rem;font-weight:700;font-variant-numeric:tabular-nums;"
+                  [style.color]="trx.uiType === 'CREDIT' ? '#10B981' : '#111827'">
+                  {{ trx.uiType === 'CREDIT' ? '+' : '-' }}{{ trx.amount | number:'1.2-2' }}
+                </span>
+                <span style="font-size:0.65rem;font-weight:600;color:#D1D5DB;margin-left:3px;">MAD</span>
+              </td>
+
+            </tr>
           </tbody>
         </table>
       </div>
+
     </div>
 
   </ng-container>
 </div>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&display=swap');
+@keyframes spin { to { transform:rotate(360deg); } }
+</style>
