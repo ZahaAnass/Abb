@@ -1,18 +1,13 @@
-<!--
-  ENHANCED: abb-frontend/src/app/features/admin/admin-dashboard/admin-dashboard.html
-  Replace the existing file content with this
--->
-
-<div style="max-width:1100px;margin:0 auto;">
+<div class="w-full pb-10">
 
   <!-- Loading -->
-  <div *ngIf="loading" class="flex flex-col items-center justify-center py-24 gap-4">
+  <div *ngIf="loading" class="flex flex-col items-center justify-center py-28 gap-4">
     <div style="width:40px;height:40px;border-radius:50%;border:2px solid rgba(220,168,25,0.2);border-top-color:#DCA819;animation:spin 0.8s linear infinite;"></div>
     <p style="font-size:0.875rem;color:#9CA3AF;font-weight:500;">Loading dashboard…</p>
   </div>
 
   <!-- Error -->
-  <div *ngIf="errorMessage" class="flex items-center gap-3 rounded-xl px-5 py-4 mb-6" style="background:#FEF2F2;border:1px solid #FECACA;">
+  <div *ngIf="errorMessage" class="flex items-center gap-3 rounded-2xl px-5 py-4 mb-6" style="background:#FEF2F2;border:1px solid #FECACA;">
     <svg width="16" height="16" fill="none" stroke="#EF4444" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="1.5"/><path d="M12 8v4M12 16h.01" stroke-width="1.5" stroke-linecap="round"/></svg>
     <span style="font-size:0.875rem;font-weight:500;color:#991B1B;">{{ errorMessage }}</span>
   </div>
@@ -20,79 +15,76 @@
   <ng-container *ngIf="!loading && stats">
 
     <!-- Page Header -->
-    <div class="mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
       <div>
         <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:#DCA819;margin-bottom:0.4rem;">Administration Portal</div>
-        <h1 style="font-family:'Playfair Display',Georgia,serif;font-size:2rem;font-weight:400;color:#111827;line-height:1.15;margin:0;">
-          Overview
-        </h1>
+        <h1 style="font-family:'Playfair Display',Georgia,serif;font-size:2.25rem;font-weight:400;color:#111827;line-height:1.15;margin:0;">Overview</h1>
         <p style="font-size:0.875rem;color:#9CA3AF;margin-top:0.4rem;">Real-time metrics across the entire bank network.</p>
       </div>
-      <!-- Date chip -->
-      <div class="flex items-center gap-2 px-3 py-2 rounded-xl" style="background:#FFFFFF;border:1px solid #E5E7EB;font-size:0.75rem;font-weight:600;color:#6B7280;white-space:nowrap;">
-        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" stroke-width="1.5"/><path d="M8 2v4M16 2v4M3 10h18" stroke-width="1.5" stroke-linecap="round"/></svg>
-        Today, {{ today | date:'MMMM d, y' }}
+      <div class="flex items-center gap-2 px-4 py-2 rounded-xl" style="background:#FFFFFF;border:1px solid #E5E7EB;white-space:nowrap;">
+        <svg width="14" height="14" fill="none" stroke="#9CA3AF" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" stroke-width="1.5"/><path d="M8 2v4M16 2v4M3 10h18" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span style="font-size:0.75rem;font-weight:600;color:#6B7280;">{{ today | date:'MMMM d, y' }}</span>
       </div>
     </div>
 
-    <!-- ── KPI Cards ───────────────────────────────────────────────── -->
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-10">
+    <!-- ── KPI CARDS ──────────────────────────────────────────────── -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-8">
 
       <!-- Clients -->
-      <div class="relative overflow-hidden rounded-2xl p-6" style="background:#FFFFFF;border:1px solid #E5E7EB;box-shadow:0 1px 3px rgba(0,0,0,0.04);">
-        <!-- Gold bottom border -->
+      <div class="relative overflow-hidden rounded-2xl p-7" style="background:#FFFFFF;border:1px solid #E5E7EB;">
         <div class="absolute bottom-0 left-0 right-0 h-0.5" style="background:#DCA819;"></div>
-        <!-- Corner ornament -->
-        <div class="absolute top-4 right-4 w-6 h-6" style="border-top:1px solid rgba(220,168,25,0.3);border-right:1px solid rgba(220,168,25,0.3);"></div>
-
-        <div class="flex items-start justify-between mb-5">
+        <div class="absolute top-4 right-4 w-8 h-8" style="border-top:1px solid rgba(220,168,25,0.3);border-right:1px solid rgba(220,168,25,0.3);"></div>
+        <div class="flex items-start justify-between mb-6">
           <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#9CA3AF;">Total Clients</div>
-          <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:rgba(220,168,25,0.08);color:#DCA819;">
-            <svg width="17" height="17" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke-width="1.5" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke-width="1.5"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(220,168,25,0.1);color:#DCA819;">
+            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke-width="1.5" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke-width="1.5"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke-width="1.5" stroke-linecap="round"/></svg>
           </div>
         </div>
-        <div style="font-family:'Playfair Display',Georgia,serif;font-size:2.75rem;font-weight:500;color:#111827;line-height:1;margin-bottom:0.4rem;">{{ stats.totalClients }}</div>
+        <div style="font-family:'Playfair Display',Georgia,serif;font-size:3.25rem;font-weight:500;color:#111827;line-height:1;margin-bottom:0.4rem;">{{ stats.totalClients }}</div>
         <div style="font-size:0.7rem;color:#9CA3AF;font-weight:500;">Registered accounts</div>
       </div>
 
       <!-- Transactions -->
-      <div class="relative overflow-hidden rounded-2xl p-6" style="background:#FFFFFF;border:1px solid #E5E7EB;box-shadow:0 1px 3px rgba(0,0,0,0.04);">
-        <div class="flex items-start justify-between mb-5">
+      <div class="relative overflow-hidden rounded-2xl p-7" style="background:#FFFFFF;border:1px solid #E5E7EB;">
+        <div class="absolute bottom-0 left-0 right-0 h-0.5" style="background:#3B82F6;"></div>
+        <div class="flex items-start justify-between mb-6">
           <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#9CA3AF;">Transactions</div>
-          <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:rgba(59,130,246,0.08);color:#3B82F6;">
-            <svg width="17" height="17" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 12h16M14 6l6 6-6 6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(59,130,246,0.08);color:#3B82F6;">
+            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 12h16M14 6l6 6-6 6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
         </div>
-        <div style="font-family:'Playfair Display',Georgia,serif;font-size:2.75rem;font-weight:500;color:#111827;line-height:1;margin-bottom:0.4rem;">{{ stats.totalTransactions }}</div>
+        <div style="font-family:'Playfair Display',Georgia,serif;font-size:3.25rem;font-weight:500;color:#111827;line-height:1;margin-bottom:0.4rem;">{{ stats.totalTransactions }}</div>
         <div style="font-size:0.7rem;color:#9CA3AF;font-weight:500;">All-time movements</div>
       </div>
 
       <!-- Employees -->
-      <div class="relative overflow-hidden rounded-2xl p-6" style="background:#FFFFFF;border:1px solid #E5E7EB;box-shadow:0 1px 3px rgba(0,0,0,0.04);">
-        <div class="flex items-start justify-between mb-5">
+      <div class="relative overflow-hidden rounded-2xl p-7" style="background:#FFFFFF;border:1px solid #E5E7EB;">
+        <div class="absolute bottom-0 left-0 right-0 h-0.5" style="background:#10B981;"></div>
+        <div class="flex items-start justify-between mb-6">
           <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#9CA3AF;">Active Staff</div>
-          <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:rgba(16,185,129,0.08);color:#10B981;">
-            <svg width="17" height="17" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="10" width="18" height="11" rx="2" stroke-width="1.5"/><path d="M7 10V7a5 5 0 0110 0v3" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(16,185,129,0.08);color:#10B981;">
+            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="10" width="18" height="11" rx="2" stroke-width="1.5"/><path d="M7 10V7a5 5 0 0110 0v3" stroke-width="1.5" stroke-linecap="round"/></svg>
           </div>
         </div>
-        <div style="font-family:'Playfair Display',Georgia,serif;font-size:2.75rem;font-weight:500;color:#111827;line-height:1;margin-bottom:0.4rem;">{{ stats.totalEmployees }}</div>
+        <div style="font-family:'Playfair Display',Georgia,serif;font-size:3.25rem;font-weight:500;color:#111827;line-height:1;margin-bottom:0.4rem;">{{ stats.totalEmployees }}</div>
         <div style="font-size:0.7rem;color:#9CA3AF;font-weight:500;">Employees on record</div>
       </div>
 
     </div>
 
-    <!-- ── Quick Actions ──────────────────────────────────────────── -->
-    <div class="mb-4 flex items-center justify-between">
-      <h2 style="font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#374151;">Quick Actions</h2>
-      <div style="height:1px;flex:1;background:#E5E7EB;margin-left:1rem;"></div>
+    <!-- ── SECTION DIVIDER ────────────────────────────────────────── -->
+    <div class="flex items-center gap-4 mb-5">
+      <h2 style="font-size:0.7rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#374151;white-space:nowrap;">Quick Actions</h2>
+      <div style="height:1px;flex:1;background:#E5E7EB;"></div>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+    <!-- ── QUICK ACTIONS ──────────────────────────────────────────── -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
 
       <a routerLink="/admin/clients"
         class="group flex items-center gap-4 p-5 rounded-2xl transition-all hover:-translate-y-0.5"
-        style="background:#FFFFFF;border:1px solid #E5E7EB;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04);">
-        <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-all group-hover:scale-105" style="background:rgba(220,168,25,0.08);color:#DCA819;">
+        style="background:#FFFFFF;border:1px solid #E5E7EB;text-decoration:none;">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 transition-all group-hover:scale-105" style="background:rgba(220,168,25,0.1);color:#DCA819;">
           <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke-width="1.5" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke-width="1.5"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke-width="1.5" stroke-linecap="round"/></svg>
         </div>
         <div class="flex-1 min-w-0">
@@ -104,8 +96,8 @@
 
       <a routerLink="/admin/transactions"
         class="group flex items-center gap-4 p-5 rounded-2xl transition-all hover:-translate-y-0.5"
-        style="background:#FFFFFF;border:1px solid #E5E7EB;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04);">
-        <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-all group-hover:scale-105" style="background:rgba(59,130,246,0.08);color:#3B82F6;">
+        style="background:#FFFFFF;border:1px solid #E5E7EB;text-decoration:none;">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 transition-all group-hover:scale-105" style="background:rgba(59,130,246,0.08);color:#3B82F6;">
           <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 7h12M8 12h8M8 17h4" stroke-width="1.5" stroke-linecap="round"/><path d="M3 7v14a1 1 0 001 1h14" stroke-width="1.5" stroke-linecap="round"/></svg>
         </div>
         <div class="flex-1 min-w-0">
@@ -117,8 +109,8 @@
 
       <a routerLink="/admin/create-employee"
         class="group flex items-center gap-4 p-5 rounded-2xl transition-all hover:-translate-y-0.5"
-        style="background:#FFFFFF;border:1px solid #E5E7EB;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04);">
-        <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-all group-hover:scale-105" style="background:rgba(16,185,129,0.08);color:#10B981;">
+        style="background:#FFFFFF;border:1px solid #E5E7EB;text-decoration:none;">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 transition-all group-hover:scale-105" style="background:rgba(16,185,129,0.08);color:#10B981;">
           <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke-width="1.5" stroke-linecap="round"/><circle cx="8.5" cy="7" r="4" stroke-width="1.5"/><path d="M20 8v6M23 11h-6" stroke-width="1.5" stroke-linecap="round"/></svg>
         </div>
         <div class="flex-1 min-w-0">
@@ -126,6 +118,65 @@
           <div style="font-size:0.75rem;color:#9CA3AF;">Create a new staff account</div>
         </div>
         <svg class="shrink-0 transition-transform group-hover:translate-x-1" width="16" height="16" fill="none" stroke="#D1D5DB" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" stroke-width="2" stroke-linecap="round"/></svg>
+      </a>
+
+    </div>
+
+    <!-- ── SECTION DIVIDER ────────────────────────────────────────── -->
+    <div class="flex items-center gap-4 mb-5">
+      <h2 style="font-size:0.7rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#374151;white-space:nowrap;">Navigate</h2>
+      <div style="height:1px;flex:1;background:#E5E7EB;"></div>
+    </div>
+
+    <!-- ── ALL PAGES GRID ─────────────────────────────────────────── -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+
+      <a routerLink="/admin/clients"
+        class="group flex flex-col gap-3 p-5 rounded-2xl transition-all hover:-translate-y-0.5"
+        style="background:#FFFFFF;border:1px solid #E5E7EB;text-decoration:none;">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(220,168,25,0.1);color:#DCA819;">
+          <svg width="17" height="17" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke-width="1.5" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke-width="1.5"/></svg>
+        </div>
+        <div>
+          <div style="font-size:0.875rem;font-weight:700;color:#111827;">Clients</div>
+          <div style="font-size:0.7rem;color:#9CA3AF;margin-top:0.15rem;">{{ stats.totalClients }} accounts</div>
+        </div>
+      </a>
+
+      <a routerLink="/admin/transactions"
+        class="group flex flex-col gap-3 p-5 rounded-2xl transition-all hover:-translate-y-0.5"
+        style="background:#FFFFFF;border:1px solid #E5E7EB;text-decoration:none;">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(59,130,246,0.08);color:#3B82F6;">
+          <svg width="17" height="17" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 12h16M14 6l6 6-6 6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <div style="font-size:0.875rem;font-weight:700;color:#111827;">Transactions</div>
+          <div style="font-size:0.7rem;color:#9CA3AF;margin-top:0.15rem;">{{ stats.totalTransactions }} total</div>
+        </div>
+      </a>
+
+      <a routerLink="/admin/employees"
+        class="group flex flex-col gap-3 p-5 rounded-2xl transition-all hover:-translate-y-0.5"
+        style="background:#FFFFFF;border:1px solid #E5E7EB;text-decoration:none;">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(16,185,129,0.08);color:#10B981;">
+          <svg width="17" height="17" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="10" width="18" height="11" rx="2" stroke-width="1.5"/><path d="M7 10V7a5 5 0 0110 0v3" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <div style="font-size:0.875rem;font-weight:700;color:#111827;">Employees</div>
+          <div style="font-size:0.7rem;color:#9CA3AF;margin-top:0.15rem;">{{ stats.totalEmployees }} staff</div>
+        </div>
+      </a>
+
+      <a routerLink="/admin/create-employee"
+        class="group flex flex-col gap-3 p-5 rounded-2xl transition-all hover:-translate-y-0.5"
+        style="background:rgba(220,168,25,0.05);border:1px solid rgba(220,168,25,0.2);text-decoration:none;">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(220,168,25,0.15);color:#DCA819;">
+          <svg width="17" height="17" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-width="2.2" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <div style="font-size:0.875rem;font-weight:700;color:#92400E;">Add Employee</div>
+          <div style="font-size:0.7rem;color:#B45309;margin-top:0.15rem;">Create account</div>
+        </div>
       </a>
 
     </div>
