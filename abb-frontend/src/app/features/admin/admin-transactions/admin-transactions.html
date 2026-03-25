@@ -1,6 +1,5 @@
 <div class="w-full pb-10">
 
-  <!-- Page Header -->
   <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
     <div>
       <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:#DCA819;margin-bottom:0.4rem;">Audit</div>
@@ -13,7 +12,6 @@
     </div>
   </div>
 
-  <!-- Toolbar -->
   <div *ngIf="!loading && !errorMessage" class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mb-5">
     <div class="relative w-full sm:max-w-xs">
       <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" width="14" height="14" fill="none" stroke="#9CA3AF" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke-width="1.5"/><path d="M21 21l-4.35-4.35" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -42,19 +40,16 @@
     </div>
   </div>
 
-  <!-- Loading -->
   <div *ngIf="loading" class="flex flex-col items-center justify-center py-28 gap-3">
     <div style="width:36px;height:36px;border-radius:50%;border:2px solid rgba(220,168,25,0.2);border-top-color:#DCA819;animation:spin 0.8s linear infinite;"></div>
     <p style="font-size:0.875rem;color:#9CA3AF;font-weight:500;">Loading transactions…</p>
   </div>
 
-  <!-- Error -->
   <div *ngIf="errorMessage" class="flex items-center gap-3 rounded-xl px-5 py-4 mb-4" style="background:#FEF2F2;border:1px solid #FECACA;">
     <svg width="14" height="14" fill="none" stroke="#EF4444" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="1.5"/><path d="M12 8v4M12 16h.01" stroke-width="1.5" stroke-linecap="round"/></svg>
     <span style="font-size:0.875rem;font-weight:500;color:#991B1B;">{{ errorMessage }}</span>
   </div>
 
-  <!-- Table -->
   <div *ngIf="!loading && !errorMessage" class="w-full rounded-2xl overflow-hidden" style="background:#FFFFFF;border:1px solid #E5E7EB;">
     <div class="overflow-x-auto w-full">
       <table style="width:100%;border-collapse:collapse;">
@@ -117,7 +112,7 @@
               <span style="font-size:0.7rem;color:#D1D5DB;margin-left:4px;">{{ trx.transactionDate | date:'HH:mm' }}</span>
             </td>
             <td *ngIf="columnVisibility.description" style="padding:1rem 1.5rem;">
-              <span style="font-size:0.875rem;font-weight:600;color:#111827;">{{ trx.description || 'Virement' }}</span>
+              <span style="font-size:0.875rem;font-weight:600;color:#111827;">{{ trx.description || 'Transfer' }}</span>
             </td>
             <td *ngIf="columnVisibility.sender" style="padding:1rem 1.5rem;white-space:nowrap;">
               <span style="font-family:monospace;font-size:0.7rem;color:#6B7280;background:#F9FAFB;border:1px solid #E9E9E7;border-radius:6px;padding:3px 8px;">{{ trx.senderRib }}</span>
@@ -134,7 +129,6 @@
       </table>
     </div>
 
-    <!-- Pagination -->
     <div class="flex items-center justify-between px-6 py-3.5" style="border-top:1px solid #F3F4F6;background:#FAFAFA;">
       <p style="font-size:0.8rem;color:#9CA3AF;">
         Showing <span style="font-weight:600;color:#374151;">{{ (currentPage - 1) * pageSize + 1 }}–{{ currentPage * pageSize > filteredTransactions.length ? filteredTransactions.length : currentPage * pageSize }}</span>

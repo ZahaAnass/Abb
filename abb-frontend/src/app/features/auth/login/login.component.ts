@@ -516,64 +516,58 @@ import { AuthService } from '../../../core/services/auth.service';
 
     <div class="login-root">
 
-      <!-- ── LEFT PANEL ─────────────────────────────────────────── -->
       <div class="panel-left">
         <div class="gold-rule"></div>
         <div class="corner-ornament"></div>
         <div class="corner-ornament-br"></div>
         <div class="grid-texture"></div>
 
-        <!-- Logo -->
         <div class="panel-left-logo">
           <div class="logo-mark">
             <img src="logo.png" alt="Al Barid Bank" class="logo-img" />
           </div>
           <div class="logo-text">
             <span class="logo-name">Al Barid Bank</span>
-            <span class="logo-tagline">Banque Postale · Maroc</span>
+            <span class="logo-tagline">Postal Bank · Morocco</span>
           </div>
         </div>
 
-        <!-- Hero -->
         <div class="panel-left-hero">
           <div class="hero-label">
             <span class="hero-label-line"></span>
-            <span class="hero-label-text">Espace Sécurisé</span>
+            <span class="hero-label-text">Secure Space</span>
           </div>
           <h1 class="hero-heading">
-            La banque <em>au service</em><br>
-            de votre avenir
+            Banking <em>for</em><br>
+            your future
           </h1>
           <p class="hero-body">
-            Accédez à vos comptes, effectuez vos virements et gérez votre patrimoine en toute sécurité, à tout moment.
+            Access your accounts, make transfers, and manage your wealth securely, anytime.
           </p>
         </div>
 
-        <!-- Footer stats -->
         <div class="panel-left-footer">
           <div class="trust-badges">
             <div class="trust-badge">
               <span class="trust-badge-value">4M+</span>
-              <span class="trust-badge-label">Clients actifs</span>
+              <span class="trust-badge-label">Active Clients</span>
             </div>
             <div class="trust-divider"></div>
             <div class="trust-badge">
               <span class="trust-badge-value">1912</span>
-              <span class="trust-badge-label">Fondée en</span>
+              <span class="trust-badge-label">Founded In</span>
             </div>
             <div class="trust-divider"></div>
             <div class="trust-badge">
               <span class="trust-badge-value">256-bit</span>
-              <span class="trust-badge-label">Chiffrement</span>
+              <span class="trust-badge-label">Encryption</span>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- ── RIGHT PANEL ────────────────────────────────────────── -->
       <div class="panel-right">
 
-        <!-- Mobile logo -->
         <div class="mobile-logo">
           <div class="mobile-logo-mark">
             <img src="logo.png" alt="Al Barid Bank" class="mobile-logo-img" />
@@ -581,13 +575,11 @@ import { AuthService } from '../../../core/services/auth.service';
           <span class="mobile-logo-name">Al Barid Bank</span>
         </div>
 
-        <!-- Form card -->
         <div class="form-card">
-          <p class="form-eyebrow">Connexion</p>
-          <h2 class="form-heading">Bon retour</h2>
-          <p class="form-subheading">Veuillez saisir vos identifiants pour accéder à votre espace.</p>
+          <p class="form-eyebrow">Login</p>
+          <h2 class="form-heading">Welcome back</h2>
+          <p class="form-subheading">Please enter your credentials to access your account.</p>
 
-          <!-- Error -->
           <div *ngIf="errorMessage" class="error-banner">
             <svg class="error-banner-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <circle cx="12" cy="12" r="10" stroke-width="1.5"/>
@@ -598,9 +590,8 @@ import { AuthService } from '../../../core/services/auth.service';
 
           <form (ngSubmit)="onLogin()" #loginForm="ngForm">
 
-            <!-- Email -->
             <div class="field">
-              <label class="field-label">Adresse e-mail</label>
+              <label class="field-label">Email Address</label>
               <div class="field-input-wrap">
                 <svg class="field-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -610,15 +601,14 @@ import { AuthService } from '../../../core/services/auth.service';
                   name="email"
                   [(ngModel)]="email"
                   required
-                  placeholder="votre.email@exemple.com"
+                  placeholder="your.email@example.com"
                   class="field-input"
                 />
               </div>
             </div>
 
-            <!-- Password -->
             <div class="field">
-              <label class="field-label">Mot de passe</label>
+              <label class="field-label">Password</label>
               <div class="field-input-wrap">
                 <svg class="field-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <rect x="3" y="11" width="18" height="11" rx="2" stroke-width="1.5"/>
@@ -635,14 +625,13 @@ import { AuthService } from '../../../core/services/auth.service';
               </div>
             </div>
 
-            <!-- Submit -->
             <button
               type="submit"
               [disabled]="!loginForm.form.valid || loading"
               class="submit-btn"
             >
               <div *ngIf="loading" class="btn-spinner"></div>
-              <span>{{ loading ? 'Connexion…' : 'Se connecter' }}</span>
+              <span>{{ loading ? 'Logging in...' : 'Log In' }}</span>
               <svg *ngIf="!loading" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path d="M5 12h14M13 6l6 6-6 6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
@@ -652,19 +641,19 @@ import { AuthService } from '../../../core/services/auth.service';
 
           <div class="form-divider">
             <div class="divider-line"></div>
-            <span class="divider-text">Pas encore client ?</span>
+            <span class="divider-text">Not a client yet?</span>
             <div class="divider-line"></div>
           </div>
 
           <p class="register-link">
-            <a routerLink="/register">Ouvrir un compte →</a>
+            <a routerLink="/register">Open an account →</a>
           </p>
 
           <div class="security-note">
             <svg class="security-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            Connexion chiffrée SSL · Données protégées
+            SSL Encrypted Login · Protected Data
           </div>
         </div>
 
@@ -697,7 +686,7 @@ export class LoginComponent {
       },
       error: () => {
         this.loading = false;
-        this.errorMessage = 'Email ou mot de passe incorrect. Veuillez réessayer.';
+        this.errorMessage = 'Incorrect email or password. Please try again.';
       }
     });
   }

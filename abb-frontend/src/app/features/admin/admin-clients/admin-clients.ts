@@ -49,7 +49,7 @@ export class AdminClientsComponent implements OnInit {
         this.cdr.detectChanges();
       },
       error: (err) => {
-        this.errorMessage = 'Impossible de charger la liste des clients.';
+        this.errorMessage = 'Unable to load the client list.';
         this.loading = false;
         this.cdr.detectChanges();
       },

@@ -46,7 +46,7 @@ export class ClientDashboardComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error fetching dashboard data:', err);
-        this.errorMessage = 'Impossible de charger vos données bancaires. Veuillez réessayer plus tard.';
+        this.errorMessage = 'Unable to load your banking data. Please try again later.';
         this.loading = false;
         
         this.cdr.detectChanges();

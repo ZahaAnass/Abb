@@ -558,47 +558,43 @@ import { AuthService } from '../../../core/services/auth.service';
 
     <div class="register-root">
 
-      <!-- ── LEFT PANEL ─────────────────────────────────────────── -->
       <div class="panel-left">
         <div class="gold-rule"></div>
         <div class="corner-ornament"></div>
         <div class="corner-ornament-br"></div>
         <div class="grid-texture"></div>
 
-        <!-- Logo -->
         <div class="panel-left-logo">
           <div class="logo-mark">
             <img src="logo.png" alt="Al Barid Bank" class="logo-img" />
           </div>
           <div class="logo-text">
             <span class="logo-name">Al Barid Bank</span>
-            <span class="logo-tagline">Banque Postale · Maroc</span>
+            <span class="logo-tagline">Postal Bank · Morocco</span>
           </div>
         </div>
 
-        <!-- Hero -->
         <div class="panel-left-hero">
           <div class="hero-label">
             <span class="hero-label-line"></span>
-            <span class="hero-label-text">Nouveau compte</span>
+            <span class="hero-label-text">New Account</span>
           </div>
           <h1 class="hero-heading">
-            Votre avenir<br>
-            commence <em>ici</em>
+            Your future<br>
+            starts <em>here</em>
           </h1>
           <p class="hero-body">
-            Rejoignez des millions de clients qui font confiance à Al Barid Bank pour gérer leurs finances en toute sécurité.
+            Join millions of clients who trust Al Barid Bank to securely manage their finances.
           </p>
 
-          <!-- Perks -->
           <div class="perks-list">
             <div class="perk-item">
               <div class="perk-icon-wrap">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
               <div>
-                <div class="perk-title">Sécurité maximale</div>
-                <div class="perk-desc">Chiffrement 256-bit, authentification renforcée</div>
+                <div class="perk-title">Maximum Security</div>
+                <div class="perk-desc">256-bit encryption, strong authentication</div>
               </div>
             </div>
             <div class="perk-item">
@@ -606,8 +602,8 @@ import { AuthService } from '../../../core/services/auth.service';
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 12h16M14 6l6 6-6 6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
               <div>
-                <div class="perk-title">Virements instantanés</div>
-                <div class="perk-desc">Transferts en temps réel partout au Maroc</div>
+                <div class="perk-title">Instant Transfers</div>
+                <div class="perk-desc">Real-time transfers anywhere in Morocco</div>
               </div>
             </div>
             <div class="perk-item">
@@ -615,38 +611,35 @@ import { AuthService } from '../../../core/services/auth.service';
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke-width="1.5" stroke-linecap="round"/></svg>
               </div>
               <div>
-                <div class="perk-title">Relevés PDF & Excel</div>
-                <div class="perk-desc">Téléchargez vos relevés à tout moment</div>
+                <div class="perk-title">PDF & Excel Statements</div>
+                <div class="perk-desc">Download your statements anytime</div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Footer stats -->
         <div class="panel-left-footer">
           <div class="trust-badges">
             <div class="trust-badge">
               <span class="trust-badge-value">4M+</span>
-              <span class="trust-badge-label">Clients actifs</span>
+              <span class="trust-badge-label">Active Clients</span>
             </div>
             <div class="trust-divider"></div>
             <div class="trust-badge">
               <span class="trust-badge-value">1912</span>
-              <span class="trust-badge-label">Fondée en</span>
+              <span class="trust-badge-label">Founded In</span>
             </div>
             <div class="trust-divider"></div>
             <div class="trust-badge">
               <span class="trust-badge-value">256-bit</span>
-              <span class="trust-badge-label">Chiffrement</span>
+              <span class="trust-badge-label">Encryption</span>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- ── RIGHT PANEL ────────────────────────────────────────── -->
       <div class="panel-right">
 
-        <!-- Mobile logo -->
         <div class="mobile-logo">
           <div class="mobile-logo-mark">
             <img src="logo.png" alt="Al Barid Bank" class="mobile-logo-img" />
@@ -654,13 +647,11 @@ import { AuthService } from '../../../core/services/auth.service';
           <span class="mobile-logo-name">Al Barid Bank</span>
         </div>
 
-        <!-- Form card -->
         <div class="form-card">
-          <p class="form-eyebrow">Inscription</p>
-          <h2 class="form-heading">Créer un compte</h2>
-          <p class="form-subheading">Rejoignez Al Barid Bank et gérez vos finances en toute liberté.</p>
+          <p class="form-eyebrow">Registration</p>
+          <h2 class="form-heading">Create an account</h2>
+          <p class="form-subheading">Join Al Barid Bank and manage your finances with complete freedom.</p>
 
-          <!-- Error -->
           <div *ngIf="errorMessage" class="error-banner">
             <svg class="error-banner-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <circle cx="12" cy="12" r="10" stroke-width="1.5"/>
@@ -671,9 +662,8 @@ import { AuthService } from '../../../core/services/auth.service';
 
           <form (ngSubmit)="onRegister()" #registerForm="ngForm">
 
-            <!-- Full Name -->
             <div class="field">
-              <label class="field-label">Nom complet</label>
+              <label class="field-label">Full Name</label>
               <div class="field-input-wrap">
                 <svg class="field-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke-width="1.5" stroke-linecap="round"/>
@@ -684,15 +674,14 @@ import { AuthService } from '../../../core/services/auth.service';
                   name="fullName"
                   [(ngModel)]="fullName"
                   required
-                  placeholder="Jean Dupont"
+                  placeholder="John Doe"
                   class="field-input"
                 />
               </div>
             </div>
 
-            <!-- Email -->
             <div class="field">
-              <label class="field-label">Adresse e-mail</label>
+              <label class="field-label">Email Address</label>
               <div class="field-input-wrap">
                 <svg class="field-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -702,15 +691,14 @@ import { AuthService } from '../../../core/services/auth.service';
                   name="email"
                   [(ngModel)]="email"
                   required
-                  placeholder="votre.email@exemple.com"
+                  placeholder="your.email@example.com"
                   class="field-input"
                 />
               </div>
             </div>
 
-            <!-- Password -->
             <div class="field">
-              <label class="field-label">Mot de passe</label>
+              <label class="field-label">Password</label>
               <div class="field-input-wrap">
                 <svg class="field-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <rect x="3" y="11" width="18" height="11" rx="2" stroke-width="1.5"/>
@@ -722,7 +710,7 @@ import { AuthService } from '../../../core/services/auth.service';
                   [(ngModel)]="password"
                   required
                   minlength="8"
-                  placeholder="Min. 8 caractères"
+                  placeholder="Min. 8 characters"
                   class="field-input has-eye"
                   (input)="checkStrength()"
                 />
@@ -732,7 +720,6 @@ import { AuthService } from '../../../core/services/auth.service';
                 </button>
               </div>
 
-              <!-- Strength meter -->
               <div class="strength-wrap" *ngIf="password.length > 0">
                 <div class="strength-bars">
                   <div class="strength-bar"
@@ -760,22 +747,20 @@ import { AuthService } from '../../../core/services/auth.service';
               </div>
             </div>
 
-            <!-- Terms -->
             <div class="terms-row">
               <input type="checkbox" id="terms" name="terms" [(ngModel)]="acceptedTerms" required class="terms-cb" />
               <label for="terms" class="terms-label">
-                J'accepte les <a href="#" class="terms-link">conditions d'utilisation</a> et la <a href="#" class="terms-link">politique de confidentialité</a> d'Al Barid Bank
+                I accept the <a href="#" class="terms-link">terms of use</a> and the <a href="#" class="terms-link">privacy policy</a> of Al Barid Bank
               </label>
             </div>
 
-            <!-- Submit -->
             <button
               type="submit"
               [disabled]="!registerForm.form.valid || loading || !acceptedTerms"
               class="submit-btn"
             >
               <div *ngIf="loading" class="btn-spinner"></div>
-              <span>{{ loading ? 'Création…' : 'Créer mon compte' }}</span>
+              <span>{{ loading ? 'Creating...' : 'Create my account' }}</span>
               <svg *ngIf="!loading" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path d="M5 12h14M13 6l6 6-6 6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
@@ -785,19 +770,19 @@ import { AuthService } from '../../../core/services/auth.service';
 
           <div class="form-divider">
             <div class="divider-line"></div>
-            <span class="divider-text">Déjà client ?</span>
+            <span class="divider-text">Already a client?</span>
             <div class="divider-line"></div>
           </div>
 
           <p class="login-link">
-            <a routerLink="/login">Se connecter →</a>
+            <a routerLink="/login">Log in →</a>
           </p>
 
           <div class="security-note">
             <svg class="security-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            Inscription chiffrée SSL · Données protégées
+            SSL Encrypted Registration · Protected Data
           </div>
         </div>
 
@@ -814,7 +799,7 @@ export class RegisterComponent {
   showPassword = false;
   acceptedTerms = false;
   strengthLevel = 0;
-  strengthLabels = ['Faible', 'Passable', 'Bon', 'Fort'];
+  strengthLabels = ['Weak', 'Fair', 'Good', 'Strong'];
 
   private router = inject(Router);
   private authService = inject(AuthService);
@@ -841,7 +826,7 @@ export class RegisterComponent {
       },
       error: () => {
         this.loading = false;
-        this.errorMessage = "L'inscription a échoué. Cet email est peut-être déjà utilisé.";
+        this.errorMessage = "Registration failed. This email may already be in use.";
       }
     });
   }

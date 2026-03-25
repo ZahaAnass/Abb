@@ -50,7 +50,7 @@ export class AdminTransactionsComponent implements OnInit {
         this.cdr.detectChanges();
       },
       error: (err) => {
-        this.errorMessage = "Impossible de charger l'historique des transactions.";
+        this.errorMessage = "Unable to load transaction history.";
         this.loading = false;
         this.cdr.detectChanges();
       },

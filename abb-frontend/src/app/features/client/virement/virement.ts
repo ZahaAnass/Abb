@@ -47,13 +47,13 @@ export class VirementComponent implements OnInit {
     const requestPayload: TransferRequest = {
       receiverRib: this.beneficiaryRib,
       amount: this.amount,
-      description: this.motif || 'Virement'
+      description: this.motif || 'Transfer'
     };
 
     this.transactionService.performTransfer(requestPayload).subscribe({
       next: (response: any) => {
         this.loading = false;
-        this.successMessage = response.message || `Le virement de ${this.amount} MAD a été effectué avec succès.`;
+        this.successMessage = response.message || `The transfer of ${this.amount} MAD was successful.`;
         
         if (this.myAccount && this.amount) {
           this.myAccount.solde -= this.amount;
@@ -67,7 +67,7 @@ export class VirementComponent implements OnInit {
       },
       error: (err) => {
         this.loading = false;
-        this.errorMessage = err.error?.error || "Une erreur est survenue lors du virement.";
+        this.errorMessage = err.error?.error || "An error occurred during the transfer.";
         this.cdr.detectChanges();
       }
     });

@@ -28,7 +28,7 @@ export class AdminCreateEmployeeComponent {
 
   onSubmit() {
     if (!this.newEmployee.name || !this.newEmployee.email) {
-      this.formError = 'Veuillez remplir tous les champs obligatoires.';
+      this.formError = 'Please fill in all required fields.';
       return;
     }
 
@@ -38,14 +38,14 @@ export class AdminCreateEmployeeComponent {
 
     this.adminService.createEmployee(this.newEmployee).subscribe({
       next: () => {
-        this.successMessage = 'Le compte employé a été créé avec succès.';
+        this.successMessage = 'Employee account created successfully.';
         this.submitting = false;
         setTimeout(() => {
           this.router.navigate(['/admin/employees']);
         }, 1500);
       },
       error: (err) => {
-        this.formError = 'Erreur lors de la création. L\'adresse email est peut-être déjà utilisée.';
+        this.formError = 'Creation failed. The email address might already be in use.';
         this.submitting = false;
       }
     });

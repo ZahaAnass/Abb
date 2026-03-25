@@ -74,14 +74,14 @@ export class HistoryComponent implements OnInit {
             this.cdr.detectChanges();
           },
           error: () => {
-            this.errorMessage = "Impossible de charger l'historique des transactions.";
+            this.errorMessage = "Unable to load transaction history.";
             this.loading = false;
             this.cdr.detectChanges();
           }
         });
       },
       error: () => {
-        this.errorMessage = 'Erreur lors du chargement des données du compte.';
+        this.errorMessage = 'Error loading account data.';
         this.loading = false;
         this.cdr.detectChanges();
       }
@@ -97,14 +97,14 @@ export class HistoryComponent implements OnInit {
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = 'releve_bancaire.pdf';
+        link.download = 'bank_statement.pdf';
         link.click();
         window.URL.revokeObjectURL(url);
         this.downloadingPdf = false;
         this.cdr.detectChanges();
       },
       error: () => {
-        alert('Impossible de télécharger le relevé PDF pour le moment.');
+        alert('Unable to download PDF statement at this time.');
         this.downloadingPdf = false;
         this.cdr.detectChanges();
       }
@@ -120,14 +120,14 @@ export class HistoryComponent implements OnInit {
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = 'releve_bancaire.xlsx';
+        link.download = 'bank_statement.xlsx';
         link.click();
         window.URL.revokeObjectURL(url);
         this.downloadingExcel = false;
         this.cdr.detectChanges();
       },
       error: () => {
-        alert('Impossible de télécharger le relevé Excel pour le moment.');
+        alert('Unable to download Excel statement at this time.');
         this.downloadingExcel = false;
         this.cdr.detectChanges();
       }
